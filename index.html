@@ -30,30 +30,8 @@
   <link href='css/conflict_main.css' rel='stylesheet' />
   <link href='css/conflict_course.css' rel='stylesheet' />
   <style>
-    body #p01 {
-      color: blue;
-    }
-
-    .full-width {
-      width: 100%;
-    }
-
-    .big-spacing {
-      margin-top: 150px;
-      margin-bottom: 150px;
-    }
-
-    .small-spacing {
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-
-    .map-wrapper {
-      position: relative;
-    }
-
     .map {
-      /*position:absolute;*/
+      position:absolute;
       top:0;
       bottom:0;
       width: 100%;
@@ -82,50 +60,6 @@
       cursor: pointer;
     }
 
-    .neighborhood-filters {
-      position: absolute;
-      left: 50px;
-      top: 10px;
-      color: white;
-      height: 840px;
-      overflow-y: scroll;
-      z-index: 2;
-      width: 260px;
-    }
-    .neighborhood-filters-backing {
-      position: absolute;
-      left: 50px;
-      top: 10px;
-      height: 840px;
-      opacity: 0.3;
-      background-color: black;
-      z-index: 1;
-      width: 260px;
-    }
-    .neighborhood-filters::-webkit-scrollbar {
-      display: none;
-    }
-
-    .keyword-filters {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      color: white;
-      z-index: 2;
-      width: 110px;
-      height: 120px;
-    }
-    .keyword-filters-backing {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      opacity: 0.3;
-      background-color: black;
-      z-index: 1;
-      width: 110px;
-      height: 120px;
-    }
-
     .img-padding {
       padding: 20px 0;
     }
@@ -149,131 +83,17 @@
   <div id="test-map" class="map"></div>
   <div id="videos-list"></div>
 
-  <div class="container main">
-    <div class="row top-row">
-      <div class="col-md-12">
-        <!-- Course : Title / Do not change -->
-        <h5><a href="../../index.html">Conflict Urbanism Aleppo Seminar</a></h5>
-        <!-- Case Study | Input Title and Student Name -->
-        <h5>Case Study | Spatializing Syria's "Youtube War"</h5>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
-      </div>
-    </div>
+  <script src="js/neighborhood.js" charset="utf-8"></script>
+  <script src="js/video.js" charset="utf-8"></script>
+  <script src="js/keyword.js" charset="utf-8"></script>
+  <script src="js/filtermanager.js" charset="utf-8"></script>
+  <script src="js/youtube.js" charset="utf-8"></script>
+  <script src="js/aleppo.js" charset="utf-8"></script>
 
-    <div class="row">
-      <!-- menu -->
-      <!-- Divide your case study into clear section for easy navigation -->
-      <div class="col-md-3 scrollspy">
-        &nbsp;
-      </div>
+  <!-- Do not change -->
 
-      <!-- main -->
-      <div class="col-md-6 body-text">
-         <!-- Adding a Text Paragraph -->
-         <!-- <h5 id="section_id">Section Title</h5> -->
-
-      <!-- COPY HERE (MAP + SPACER) -->
-      </div>
-    </div> <!--row-->
-
-<div class="img-padding">
-
-  <!-- Main Map -->
-  <div class="map-wrapper">
-    <div id="mainmap" class="map"></div>
-    <div id="mainmap-neighborhood-filters" class="neighborhood-filters"></div>
-    <div class="neighborhood-filters-backing"></div>
-
-    <div id="mainmap-keyword-filters" class="keyword-filters"></div>
-    <div class="keyword-filters-backing"></div>
-
-    <div id="mainmap-lightbox" class="lightbox">
-      <div class="content"></div>
-      <a class="close-button" href="#">[x] Close</a>
-    </div>
-  </div>
-
-</div>
-
-<div class="row">
-  <div class="col-md-3 scrollspy">
-    &nbsp;
-  </div>
-
-  <div class="col-md-6 body-text">
-<!-- STOP COPYING HERE -->
-
-
-
-
-
-
-
-<br/><br/><br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/><br/><br/>
-
-
-
-
-
-
-
-<!-- COPY HERE (MAP + SPACER) -->
-</div>
-</div> <!--row-->
-
-<div class="img-padding">
-
-  <!-- Main Map -->
-  <div class="map-wrapper">
-    <div id="channelmap" class="map"></div>
-    <div id="channelmap-neighborhood-filters" class="neighborhood-filters"></div>
-    <div class="neighborhood-filters-backing"></div>
-
-    <div id="channelmap-keyword-filters" class="keyword-filters"></div>
-    <div class="keyword-filters-backing"></div>
-
-    <div id="channelmap-lightbox" class="lightbox">
-      <div class="content"></div>
-      <a class="close-button" href="#">[x] Close</a>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-3 scrollspy">
-    &nbsp;
-  </div>
-
-  <div class="col-md-6 body-text">
-<!-- STOP COPYING HERE -->
-
-</div>
-
-<!-- Do not change -->
-
-  <div class="row red bottom-line">
-    <div class="col-sm-12">
-      <center> Center for Spatial Research, Columbia University</center>
-    </div>
-  </div>
-
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="js/neighborhood.js" charset="utf-8"></script>
-<script src="js/video.js" charset="utf-8"></script>
-<script src="js/keyword.js" charset="utf-8"></script>
-<script src="js/filtermanager.js" charset="utf-8"></script>
-<script src="js/youtube.js" charset="utf-8"></script>
-<script src="js/aleppo.js" charset="utf-8"></script>
-
-<!-- Do not change -->
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" crossorigin="anonymous"></script>
-
-
-
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
