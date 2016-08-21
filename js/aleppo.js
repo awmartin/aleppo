@@ -13,8 +13,20 @@
       numTotalNeighborhoods: 136,
       numNeighborhoods: 0,
       neighborhoods: [],
-      videos: [],
+      videos: {},
       map: null
+    };
+
+    // Gets the video id and accounts for different data structures
+    // that YouTube may decide to send.
+    var getVideoId = function getVideoId(video) {
+      var resourceId = video.snippet.resourceId;
+      if (resourceId) {
+        return resourceId.videoId;
+      }
+      if (video.id && video.id.videoId) {
+        return video.id.videoId;
+      }
     };
 
     // This creates a new map of Aleppo using MapBox at the given HTML id.
@@ -86,12 +98,10 @@
     };
 
     var placeMarkersOnMap = function placeMarkersOnMap() {
-      var v = 0,
-        numVideos = constants.videos.length,
-        neighborhoodMap = {};
+      var neighborhoodMap = {};
 
-      for (; v < numVideos; v++) {
-        var video = constants.videos[v];
+      for (var key in constants.videos) {
+        var video = constants.videos[key];
 
         var videoHasNeighborhood = video.neighborhood != null;
         if (videoHasNeighborhood) {
@@ -120,40 +130,42 @@
         // This further colors and sizes markers based on the amount of markers
         // in the neighborhood
 
-
         if (neighborhoodVideos.length > 0 && neighborhoodVideos.length < 5) {
-
           neighborhood.properties['marker-symbol'] = neighborhoodVideos.length;
           neighborhood.properties['marker-size'] = 'small';
           neighborhood.properties['marker-color'] = '#FF0096';
           geoJson.push(neighborhood);
+
         } else if (neighborhoodVideos.length >= 5 && neighborhoodVideos.length < 10) {
           neighborhood.properties['marker-symbol'] = neighborhoodVideos.length;
           neighborhood.properties['marker-size'] = 'medium';
           neighborhood.properties['marker-color'] = '#FF006C';
           geoJson.push(neighborhood);
+
         } else if (neighborhoodVideos.length >= 10 && neighborhoodVideos.length < 15) {
           neighborhood.properties['marker-symbol'] = neighborhoodVideos.length;
           neighborhood.properties['marker-size'] = 'large';
           neighborhood.properties['marker-color'] = '#FF004A';
           geoJson.push(neighborhood);
+
         } else if (neighborhoodVideos.length >= 15 && neighborhoodVideos.length < 18) {
           neighborhood.properties['marker-symbol'] = neighborhoodVideos.length;
           neighborhood.properties['marker-size'] = 'large';
           neighborhood.properties['marker-color'] = '#FF002C';
           geoJson.push(neighborhood);
+
         } else if (neighborhoodVideos.length >= 18 && neighborhoodVideos.length < 800) {
           neighborhood.properties['marker-symbol'] = neighborhoodVideos.length;
           neighborhood.properties['marker-size'] = 'large';
           neighborhood.properties['marker-color'] = '#FF0000';
           geoJson.push(neighborhood);
+
         }
 
       } // end of neighborhood loop
 
       var placedVideos = L.mapbox.featureLayer().setGeoJSON(geoJson).addTo(constants.map);
       placedVideos.on('click', function onMarkerClick(e) {
-        console.log("CLICK!");
         $('#videos-list').empty();
 
         var neighborhood = e.layer.feature,
@@ -161,23 +173,25 @@
           i = 0,
           numVideos = videos.length;
 
+        // Sort the videos by snippet.publishedAt.
+        videos.sort(function(a, b) {
+          if (a.snippet.publishedAt < b.snippet.publishedAt) {
+            return 1;
+          } else if (a.snippet.publishedAt > b.snippet.publishedAt) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+
         for (; i < numVideos; i++) {
           var video = videos[i];
 
-          // Gets the video id and accounts for different data structures
-          // that YouTube may decide to send.
-          var getVideoId = function getVideoId(video) {
-            var resourceId = video.snippet.resourceId;
-            if (resourceId) {
-              return resourceId.videoId;
-            }
-            if (video.id && video.id.videoId) {
-              return video.id.videoId;
-            }
-          };
-
           var thumbnail = video.snippet.thumbnails.default;
           if (thumbnail) {
+            var div = $('<div>');
+            div.addClass('video');
+
             var link = $('<a>');
             var videoId = getVideoId(video);
 
@@ -192,15 +206,23 @@
             img.attr('src', thumbnail.url);
             link.append(img);
 
-            $('#videos-list').append(link);
+            div.append(link);
+
+            var dateElt = $('<div>');
+            dateElt.addClass('date');
+            var date = String(video.snippet.publishedAt).split("T")[0];
+            var dateText = document.createTextNode(date);
+            dateElt.append(dateText);
+
+            div.append(dateElt);
+
+            $('#videos-list').append(div);
           }
         }
 
         $('#videos-list').show();
       });
     };
-
-    const equivalentNames = {};
 
     // Utility function for formatting the neighborhoods from MapBox in JSON.
     // Place this as the first line in onMapDone below to use.
@@ -286,8 +308,7 @@
 
       // This function is essentially what you do when all the videos are retrieved.
       var onYouTubeDone = function(videos) {
-        console.log("Got ", videos.length, " videos");
-        console.log(videos);
+        console.log("Got ", videos.length, " videos:", videos);
 
         var i = 0,
           numVideos = videos.length;
@@ -295,8 +316,11 @@
         // Loop over all the videos and tag them with their neighborhood.
         for (; i < numVideos; i++) {
           var video = videos[i];
+          var videoId = getVideoId(video);
+
           locateTheVideo(video);
-          constants.videos.push(video);
+
+          constants.videos[videoId] = video;
         } // end videos for loop
 
         // Put the markers on the map.
