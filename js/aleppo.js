@@ -202,6 +202,7 @@
 
     var onMapDone = function(neighborhoods) {
 
+      // Attempts to associate video titles with the known neighborhood names.
       var locateTheVideo = function(video) {
         var j = 0,
           numNeighborhoods = neighborhoods.length;
@@ -240,7 +241,42 @@
 
       // Change to yt.getAllVideosFromChannelViaPlaylists to get all the videos
       // linked in playlists in a channel.
-      yt.getAllVideosFromChannel('UCALQlTUA8X31_af5f083yaw', onYouTubeDone);
+
+      // This request limits the results to 500 videos.
+      // yt.getAllVideosFromChannel('UCALQlTUA8X31_af5f083yaw', onYouTubeDone);
+
+      // Channel IDs:
+      // - UCALQlTUA8X31_af5f083yaw : has videos only up until about 6 months ago.
+      // - UCesBL01BgmHzdp1GZT2ltJw : has new videos.
+
+      yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
+        publishedAfter: '2016-04-08T00:00:00Z',
+        publishedBefore: '2016-04-24T00:00:00Z',
+      });
+
+      yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
+        publishedAfter: '2016-04-24T00:00:00Z',
+        publishedBefore: '2016-05-10T00:00:00Z',
+      });
+
+      yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
+        publishedAfter: '2016-05-10T00:00:00Z',
+        publishedBefore: '2016-05-26T00:00:00Z',
+      });
+
+      yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
+        publishedAfter: '2016-05-26T00:00:00Z',
+        publishedBefore: '2016-06-11T00:00:00Z',
+      });
+
+      yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
+        publishedAfter: '2016-06-11T00:00:00Z',
+        publishedBefore: '2016-06-27T00:00:00Z',
+      });
+
+      // yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
+      //   publishedAfter: '2016-06-27T00:00:00Z',
+      // });
     };
 
     // Creates a new map to play with.

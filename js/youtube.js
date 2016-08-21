@@ -4,6 +4,7 @@ function YouTube(apiKey) {
 
 // onDone = function(playlists) { ... }
 // https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=UCALQlTUA8X31_af5f083yaw&maxResults=22&pageToken=CBYQAA&key={YOUR_API_KEY}
+
 YouTube.prototype.getAllPlaylistsFromChannel = function(channelId, onDone) {
   $.ajax({
     url: 'https://www.googleapis.com/youtube/v3/playlists',
@@ -24,13 +25,17 @@ YouTube.prototype.getAllPlaylistsFromChannel = function(channelId, onDone) {
   });
 };
 
-YouTube.prototype.getAllVideosFromPlaylist = function(playlistId, onDone, options={}) {
+
+YouTube.prototype.getAllVideosFromPlaylist = function(playlistId, onDone, options = {}) {
 
   var onSuccess = function onSuccess(data) {
     var itemsSoFar = options.items || [];
     if (data.nextPageToken) {
       console.log("Requesting another page:", data.nextPageToken);
-      this.getAllVideosFromPlaylist(playlistId, onDone, {items: itemsSoFar.concat(data.items), pageToken:data.nextPageToken});
+      this.getAllVideosFromPlaylist(playlistId, onDone, {
+        items: itemsSoFar.concat(data.items),
+        pageToken: data.nextPageToken
+      });
     } else {
       onDone(itemsSoFar.concat(data.items));
     }
@@ -92,17 +97,24 @@ YouTube.prototype.getAllVideosFromChannelViaPlaylists = function(channelId, onDo
   this.getAllPlaylistsFromChannel(channelId, onGotAllPlaylists.bind(this));
 };
 
-YouTube.prototype.getAllVideosFromChannel = function(channelId, onDone, options={}) {
+YouTube.prototype.getAllVideosFromChannel = function(channelId, onDone, options = {}) {
 
   var onSuccess = function onSuccess(data) {
     var itemsSoFar = options.items || [];
     console.log("Got", data.items.length, "videos on this page.");
-    if (data.nextPageToken) {
-      console.log("Requesting another page:", data.nextPageToken);
-      this.getAllVideosFromChannel(channelId, onDone, {items: itemsSoFar.concat(data.items), pageToken:data.nextPageToken});
-    } else {
+
+    if (data.items.length === 0 || !data.nextPageToken) {
       onDone(itemsSoFar.concat(data.items));
+
+    } else {
+      console.log("Requesting another page:", data.nextPageToken);
+
+      this.getAllVideosFromChannel(channelId, onDone, {
+        items: itemsSoFar.concat(data.items),
+        pageToken: data.nextPageToken
+      });
     }
+
   }.bind(this);
 
 
@@ -113,6 +125,13 @@ YouTube.prototype.getAllVideosFromChannel = function(channelId, onDone, options=
     'maxResults': 50,
     'type': 'video'
   };
+
+  if (options.publishedBefore) {
+    postData.publishedBefore = options.publishedBefore;
+  }
+  if (options.publishedAfter) {
+    postData.publishedAfter = options.publishedAfter;
+  }
 
   if (options.pageToken) {
     postData.pageToken = options.pageToken;
