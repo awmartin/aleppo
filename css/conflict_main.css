@@ -1,0 +1,511 @@
+
+    body 
+
+    /* -------------------- FONT FAMILY ------------------------- */
+    {
+        background-color: white;
+        font-family: 'UniversNextW01-Regular';
+        font-size: 21px;
+        font-weight: 400;
+        
+        color: #000;
+        line-height: 1em;
+        
+        /*
+        letter-spacing: -0.01625em;
+        */
+
+    }
+
+    .yellow-bg {
+        background-color: #fce703;
+    }
+
+    .blue-bg {
+        background-color: #28a9e1;
+    }
+    /* Cross Line */
+    .left-col:before,
+    .upper-col:before,
+    .right-col:before {
+        content: "";
+        height: 1px;
+        left: 0;
+        position: absolute;
+        top: 0px;
+        width: 100%;
+        z-index: 4;
+    }
+
+    .main.container {
+        width: 100%;
+    }
+
+
+    #map {}
+    /* ------------------------------------------------------------ */
+
+    /* -------------------- BLOCK: HEADER ------------------------- */
+
+    /* Conflict urbanism heading text */
+    .col-first h5 {
+        margin-bottom: 0px;
+        margin-top: 0px;
+        font-size: 18px;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 700;
+
+    }
+    
+    /* Conflict urbanism heading background */
+    .col-first.col-sm-3 {
+        color: #000;
+    }
+    
+/* project Aleppo heading text */
+    .col-second h5 {
+        margin-bottom: 0px;
+        font-size: 18px;
+        padding-bottom: 0px;
+        margin-top: 0px;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 700;
+    }
+    
+    /* project Aleppo heading text */
+    .col-second.col-sm-10 {
+        color: #000;
+    }
+    
+
+    .row.top-row {
+         border-bottom: 2px solid black;
+
+    }
+/* ------------------------------------------------------------ */
+
+
+
+/* -------------------- BLOCK: FOOTER ------------------------- */
+
+    /* Base Bar */
+    .red {
+        color: #000;
+        font-size: 12px;
+        font-weight: thin;
+    }
+    
+    .bottom-line h5 {
+        margin-bottom: 0px;
+        font-size: 12px;
+        margin-top: 0px;
+        color: #000;
+    }
+    
+    .bottom-line {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    
+    .black {
+        color: #000;
+        font-size: 12px;
+        font-weight: thin;
+    }
+    
+/* ------------------------------------------------------------ */
+/* ------------------------------------------------------------ */
+
+
+/* -------------------- BLOCK: CENTER ------------------------- */
+
+/* -------------------- BLOCK1: DES+MTH ----------------------- */
+
+
+    .dark-grey {
+        color: #000;
+        font-size: 12px;
+    }
+    
+    .light-grey {
+        
+        padding: 12px 0;
+        color: #000;
+        width: 100%;
+        position: relative;
+        text-align: justify;
+    }
+    
+    .data-rows .row {
+        cursor: pointer;
+    }
+    
+    .row-photo,
+    .row-text,
+    .row-graph {
+        cursor: pointer;
+    }
+    
+    .light-grey h5 {
+        color: #000;
+        margin-bottom: 0;
+        margin-top: 0;
+        font-size: 12px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+    
+    .light-grey .icons {
+        margin-top: -6px;
+        position: absolute;
+        right: 0;
+        top: 12px;
+    }
+    
+    .glyphicon-align-justify:before,
+    .glyphicon-signal:before {
+        font-size: 12px;
+        color: #000;
+    }
+    
+    .glyphicon-camera:before {
+        font-size: 13px;
+        color: #000;
+    }
+    
+    .pull-right .glyphicon-camera:before {
+        position: relative;
+        top: 1px;
+    }
+    
+    /* Neighborhood Description */
+    .dark-grey > .col-sm-12 > p {
+        text-align: left;
+    }
+    
+/* ------------------------------------------------------------ */
+
+
+/* ---------------------- BLOCK2: LIST ------------------------ */
+
+    .darker-grey {
+        
+        color: #000;
+        overflow-x: hidden;
+        overflow-y: auto;
+        
+    }
+    
+/* ------------------------------------------------------------ */
+
+
+/* -------------------- BLOCK3: INTERFACE ---------------------- */
+
+    .main {
+        height: 810px;
+    }
+    
+    .very-light-grey {
+        
+        color: #000;
+        display: block;
+        height: 105%; /* calc(100% - 25px); */
+        text-align: justify;
+    }
+    
+    .mid-column {}
+    
+    .mid-column .row {
+        color: #000;
+        display: block;
+        height: 100%;
+        text-align: justify;
+    }
+
+
+
+ /* ------------------------------------------------------------ */
+
+/* -------------------- BLOCKS: LAYOUT ------------------------ */
+    
+    
+    .first-column,
+    .second-column {}
+    
+    .first-column,
+    .third-column {
+        height: calc(100% - 343px);
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+
+    
+    .first-column.neighborhoods {
+        height: 100%;
+        padding-bottom: 0px;
+        font-size: 12px;
+        color: #000;
+        text-align: justify;
+        min-width: 240px;
+    }
+    
+    .third-column {
+        
+        color: #000;
+    }
+    
+    .second-column {
+        height: 243px;
+        border-top: 2px solid black;
+        
+    }
+    
+    .left-col .row,
+    .right-col .row {
+        display: block;
+        height: 100%;
+    }
+    
+    .second-column .dark-grey {
+        display: block;
+        height: calc(100% - 39px);
+        -webkit-height: calc(100% - 36px);
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    
+    .col-first.col-sm-3,
+    .col-second.col-sm-10 {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    
+    .left-col.col-sm-3,
+    .right-col.col-sm-3 {
+        height: 100%;
+    }
+    
+    .right-col.col-sm-3 {
+        float: right;
+    }
+    
+    .light-grey,
+    .dark-grey {
+        display: table;
+    }
+    .first-column h5,
+    .first-column h4 {
+        
+        font-size: 13px;
+font-family: 'Open Sans', sans-serif;
+        font-weight: 700;
+          margin-left: 15px;
+    }
+    .second-column h5,
+    .second-column h4 {
+        margin-bottom: 0px;
+        margin-top: 0px;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 700;
+    }
+    
+    /* -------------------- BLOCKS: VISUALIZE ------------------------ */
+
+    .mid-column.col-sm-8 {
+        height: 100%;
+        
+    }
+    
+    .upper-col {
+        height:100%;
+       /* height: calc(100% - 242px); */
+        overflow-x: hidden;
+        overflow-y: hidden;
+        padding-bottom: 15px;
+        padding-top: 15px;
+    }
+    
+    .t-1 {
+        display: block;
+        height: 100%;
+        font-size: 10px;
+    }
+    
+    .t-title {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 700;
+        height: 30px;
+    }
+    
+    .t-title h5 {
+        margin-bottom: 0;
+        margin-top: 0;
+        padding-top: 2px;
+        padding: 8px 0;
+        color: #000;
+        font-size: 13px;
+    }
+    
+    .t-1 p{
+        display: block;
+        margin: 0;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: calc(100% - 30px);
+        clear: both;
+        color: #000;
+    }
+    
+    .mid-grey {
+        
+        text-align: justify;
+        color: #000;
+        padding: 10px 0;
+        width: 100%;
+        display: table;
+    }
+    
+    .mid-grey h5 {
+        color: #000;
+        text-align: justify;
+        margin-bottom: 0;
+        margin-top: 0;
+        font-size: 12px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+
+/* ------------------------------------------------------------ */
+
+/* -------------------- MAPBOX  STYLING ----------------------- */
+    
+    .leaflet-bar a,
+    .leaflet-control-layers-toggle,
+    .leaflet-popup-close-button,
+    .map-tooltip.closable .close,
+    .mapbox-button-icon:before,
+    .mapbox-icon {
+        text-align: center;
+    }
+
+    #layer-switcher .col-sm-3 {
+        padding: 1px;
+    }
+
+    #layer-switcher {
+        font-size: 70%;
+    }
+    
+    input[type=checkbox],
+    input[type=radio] {
+          margin-right: 5px;
+    }
+
+
+    .range {
+        position:absolute;
+        width:100%;
+    }
+
+     #zoom-level {
+        margin: 1px;
+        padding: 0px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        opacity: 0.8;
+        color: #000;
+}
+
+
+#marker-list > div > div > span {
+    font-size: 90%;
+    font-family: 'Open Sans', sans-serif;
+        font-weight: 300;
+}
+
+#layer-switcher > div {
+    width: 100%;
+}
+
+/* ------------------------------------------------------------ */
+
+/* -------------------- SEARCH BAR ---------------------- */   
+
+    .search-box{
+            width: 100%;
+            color: #000;
+            
+        
+        }
+
+    .search-box input{
+              width: 80%;
+  position: relative;
+  color: #000;
+  left: 14px;
+  border: none;
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+        }
+        
+/* -------------------- MEDIA ADJUSTMENT ---------------------- */   
+
+    
+    @media (min-width: 1280px) {
+       
+        .col-first.col-sm-3 {
+            width: 200px;
+        }
+        .col-second.col-sm-10 {
+            width: calc(100% - 200px);
+        }
+        .left-col.col-sm-3,
+        .right-col.col-sm-3 {
+            width: 200px;
+        }
+        .mid-column.col-sm-8 {
+            float: none;
+            position: relative;
+            margin-right: 200px;
+            margin-left: 240px;
+            width: auto;
+        }
+    }
+    
+    @media (min-width: 768px) and (max-width: 1279px) {
+        .col-first.col-sm-3 {
+            width: 200px;
+        }
+        .col-second.col-sm-10 {
+            width: calc(100% - 200px);
+        }
+        .left-col.col-sm-3,
+        .right-col.col-sm-3 {
+            width: 200px;
+        }
+        .mid-column.col-sm-8 {
+            float: none;
+            position: relative;
+            margin-right: 200px;
+            margin-left: 200px;
+            width: auto;
+        }
+    }
+    
+    @media (max-width: 767px) {
+        .main {
+            margin: 0px 15px;
+            height: 100%;
+        }
+    }
+
+/* ------------------------------------------------------------ */
+
+/* ----------------------- S T Y L E -------------------------- */   
+
+/* ------------------------------------------------------------ */
