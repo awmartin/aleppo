@@ -200,8 +200,43 @@
       });
     };
 
-    var onMapDone = function(neighborhoods) {
+    const equivalentNames = {};
 
+    // Utility function for formatting the neighborhoods from MapBox in JSON.
+    // Place this as the first line in onMapDone below to use.
+    constants.printedNeighborhoods = false;
+    var dumpNeighbohoodsJson = function dumpNeighbohoodsJson() {
+      if (!constants.printedNeighborhoods) {
+
+        var result = {};
+
+        var j = 0,
+          numNeighborhoods = neighborhoods.length;
+
+        for (; j < numNeighborhoods; j++) {
+          var neighborhood = neighborhoods[j];
+          var name_a = neighborhood.properties.NAME_A;
+          var name = neighborhood.properties.NAME;
+
+          console.log(name_a, name, neighborhood);
+
+          var neighborhoodJson = {};
+
+          neighborhoodJson.original_name_a = name_a;
+          neighborhoodJson.original_name = name;
+          neighborhoodJson.alternative_arabic = [name_a];
+          neighborhoodJson.alternative_english = [name];
+
+          result[neighborhood.id] = neighborhoodJson;
+        }
+
+        console.log(JSON.stringify(result));
+
+        constants.printedNeighborhoods = true;
+      }
+    };
+
+    var onMapDone = function(neighborhoods) {
       // Attempts to associate video titles with the known neighborhood names.
       var locateTheVideo = function(video) {
         var j = 0,
