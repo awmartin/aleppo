@@ -244,12 +244,43 @@
 
         for (; j < numNeighborhoods; j++) {
           var neighborhood = neighborhoods[j];
-          var name_a = neighborhood.properties.NAME_A;
-          var title = neighborhood.properties.title;
+          var nameEquivalencyTable = constants.neighborhoodNames[neighborhood.id];
 
-          if (video.snippet.title.includes(name_a) || video.snippet.title.includes(title)) {
-            video.neighborhood = neighborhood;
+          if (nameEquivalencyTable) {
+
+            var ar = 0,
+              numArabic = nameEquivalencyTable.alternative_arabic.length,
+              en = 0,
+              numEnglish = nameEquivalencyTable.alternative_english.length;
+
+            // Loop through all the equivalent arabic names. Stop if we find a name in the title.
+            for (; ar < numArabic; ar++) {
+              var arabicName = nameEquivalencyTable.alternative_arabic[ar];
+              if (video.snippet.title.includes(arabicName)) {
+                video.neighborhood = neighborhood;
+                break;
+              }
+            }
+            // Loop through all the equivalent english names too. Stop if we find one in the title.
+            for (; en < numEnglish; en++) {
+              var englishName = nameEquivalencyTable.alternative_english[en];
+              if (video.snippet.title.includes(englishName)) {
+                video.neighborhood = neighborhood;
+                break;
+              }
+            }
+
+          } else {
+            // The default behavior. Needed if something is wrong with or missing from the
+            // equivalency table.
+            var name_a = neighborhood.properties.NAME_A;
+            var title = neighborhood.properties.title;
+
+            if (video.snippet.title.includes(name_a) || video.snippet.title.includes(title)) {
+              video.neighborhood = neighborhood;
+            }
           }
+
         }
       };
 
@@ -314,7 +345,15 @@
       // });
     };
 
-    // Creates a new map to play with.
-    var myMap = makeMap('test-map', onMapDone);
+    // Get the neighborhood name equivalency data.
+
+    $.get('data/neighborhoods.json', function(data) {
+      console.log("Got the name equivalency table:", data);
+      constants.neighborhoodNames = data;
+
+      // Creates a new map to play with. It does return an object you can mess with.
+      makeMap('test-map', onMapDone);
+    });
+
   };
 })();
