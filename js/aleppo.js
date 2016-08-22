@@ -127,8 +127,9 @@
         // If the number of videos in the neighborhood is greater than 0, then
         // add a marker to the map. This effectively hides the "empty"
         // neighborhoods from the map.
-        // This further colors and sizes markers based on the amount of markers
-        // in the neighborhood
+
+        // This further colors and sizes markers based on the number of videos
+        // in the neighborhood.
 
         if (neighborhoodVideos.length > 0 && neighborhoodVideos.length < 5) {
           neighborhood.properties['marker-symbol'] = neighborhoodVideos.length;
@@ -154,8 +155,14 @@
           neighborhood.properties['marker-color'] = '#FF002C';
           geoJson.push(neighborhood);
 
-        } else if (neighborhoodVideos.length >= 18 && neighborhoodVideos.length < 800) {
+        } else if (neighborhoodVideos.length >= 18 && neighborhoodVideos.length < 100) {
           neighborhood.properties['marker-symbol'] = neighborhoodVideos.length;
+          neighborhood.properties['marker-size'] = 'large';
+          neighborhood.properties['marker-color'] = '#FF0000';
+          geoJson.push(neighborhood);
+
+        } else if (neighborhoodVideos.length >= 100) {
+          neighborhood.properties['marker-symbol'] = 'x';
           neighborhood.properties['marker-size'] = 'large';
           neighborhood.properties['marker-color'] = '#FF0000';
           geoJson.push(neighborhood);
@@ -164,7 +171,19 @@
 
       } // end of neighborhood loop
 
+
+
+      // Count the videos placed in neighborhoods successfully.
+      var numPlacedVideos = 0;
+      for (var key in neighborhoodMap) {
+        numPlacedVideos += neighborhoodMap[key].length;
+      }
+      console.log("Placed", numPlacedVideos, "videos in neighborhoods.");
+
+
+      console.log("geoJson:", geoJson);
       var placedVideos = L.mapbox.featureLayer().setGeoJSON(geoJson).addTo(constants.map);
+
       placedVideos.on('click', function onMarkerClick(e) {
         $('#videos-list').empty();
 
@@ -306,6 +325,7 @@
         }
       };
 
+
       // This function is essentially what you do when all the videos are retrieved.
       var onYouTubeDone = function(videos) {
         console.log("Got ", videos.length, " videos:", videos);
@@ -339,38 +359,85 @@
       // - UCALQlTUA8X31_af5f083yaw : has videos only up until about 6 months ago.
       // - UCesBL01BgmHzdp1GZT2ltJw : has new videos.
 
-      yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
-        publishedAfter: '2016-04-08T00:00:00Z',
-        publishedBefore: '2016-04-24T00:00:00Z',
-      });
-
-      yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
-        publishedAfter: '2016-04-24T00:00:00Z',
-        publishedBefore: '2016-05-10T00:00:00Z',
-      });
-
-      yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
-        publishedAfter: '2016-05-10T00:00:00Z',
-        publishedBefore: '2016-05-26T00:00:00Z',
-      });
-
-      yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
-        publishedAfter: '2016-05-26T00:00:00Z',
-        publishedBefore: '2016-06-11T00:00:00Z',
-      });
-
-      yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
-        publishedAfter: '2016-06-11T00:00:00Z',
-        publishedBefore: '2016-06-27T00:00:00Z',
-      });
-
+      // Request videos in a date range like this:
       // yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
-      //   publishedAfter: '2016-06-27T00:00:00Z',
+      //   publishedAfter: '2016-06-11T00:00:00Z',
+      //   publishedBefore: '2016-06-27T00:00:00Z',
       // });
-    };
+
+      // Get all the most recent videos.
+      yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
+        publishedAfter: '2016-08-21T00:00:00Z',
+      });
+
+
+      // Videos are cached in data/videos.json. Request that first and map them.
+
+      var placeCachedVideos = function(videos) {
+        // Loop over all the videos and tag them with their neighborhood.
+        for (var key in videos) {
+          var video = videos[key];
+          var videoId = getVideoId(video);
+
+          locateTheVideo(video);
+
+          constants.videos[videoId] = video;
+        } // end videos for loop
+
+        // Put the markers on the map.
+        placeMarkersOnMap();
+      };
+
+      $.get('data/videos.json', placeCachedVideos);
+
+
+
+      // Get all the videos throughout the given data ranges in data/LandsatDateRangeBiweek.csv.
+      // Use this to help build the cache at data/videos.csv.
+
+      /*$.get('data/LandsatDateRangeBiWeek.csv', function(data) {
+        // Parse the csv data into rows.
+        var dates = data.split("\n");
+        var i = 0,
+          numDates = dates.length;
+
+        constants.numBiweeklyRequestsExpected = numDates - 1;
+
+        var onBiweeklyRequestDone = function(videos) {
+          constants.numBiweeklyRequestsExpected -= 1;
+          onYouTubeDone(videos);
+
+          if (constants.numBiweeklyRequestsExpected === 0) {
+            console.log(JSON.stringify(constants.videos));
+          }
+        };
+
+        for (; i < numDates - 1; i++) {
+          var after = dates[i];
+          var before = dates[i + 1];
+
+          if (before === '') {
+            yt.getAllVideosFromChannel(
+              'UCALQlTUA8X31_af5f083yaw',
+              onBiweeklyRequestDone, {
+                publishedAfter: after,
+              });
+          } else {
+            yt.getAllVideosFromChannel(
+              'UCALQlTUA8X31_af5f083yaw',
+              onBiweeklyRequestDone, {
+                publishedAfter: after,
+                publishedBefore: before,
+              });
+          }
+
+        }
+      });*/
+
+    }; // onMapDone
+
 
     // Get the neighborhood name equivalency data.
-
     $.get('data/neighborhoods.json', function(data) {
       console.log("Got the name equivalency table:", data);
       constants.neighborhoodNames = data;
