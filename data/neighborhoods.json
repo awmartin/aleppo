@@ -3,7 +3,8 @@
     "original_name_a": "الألمجي",
     "original_name": "al-Almaji",
     "alternative_arabic": [
-      "الألمجي"
+      "الألمجي",
+      "الالمجي"
     ],
     "alternative_english": [
       "al-Almaji"
@@ -13,7 +14,8 @@
     "original_name_a": "أبراج",
     "original_name": "Abraj",
     "alternative_arabic": [
-      "أبراج"
+      "أبراج",
+      "ابراج"
     ],
     "alternative_english": [
       "Abraj"
@@ -43,7 +45,8 @@
     "original_name_a": "مقر الأنبياء",
     "original_name": "Maqar al-Anbiya'a",
     "alternative_arabic": [
-      "مقر الأنبياء"
+      "مقر الأنبياء",
+      "مقر الانبياء"
     ],
     "alternative_english": [
       "Maqar al-Anbiya'a"
@@ -83,7 +86,9 @@
     "original_name_a": "الفردوس",
     "original_name": "al-Fardos",
     "alternative_arabic": [
-      "الفردوس"
+      "الفردوس",
+      "دوار جسر الحج",
+      "جسر الحج"
     ],
     "alternative_english": [
       "al-Fardos"
@@ -103,7 +108,8 @@
     "original_name_a": "أنصاري شرقي",
     "original_name": "Ansari Sharqi",
     "alternative_arabic": [
-      "أنصاري شرقي"
+      "أنصاري شرقي",
+      "انصاري شرقي"
     ],
     "alternative_english": [
       "Ansari Sharqi"
@@ -143,7 +149,8 @@
     "original_name_a": "الحمدانية",
     "original_name": "al-Hamdaniyeh IV",
     "alternative_arabic": [
-      "الحمدانية"
+      "الحمدانية",
+      "الحمدانيه"
     ],
     "alternative_english": [
       "al-Hamdaniyeh IV"
@@ -163,7 +170,9 @@
     "original_name_a": "البلليرمون",
     "original_name": "al-Belleramoon",
     "alternative_arabic": [
-      "البلليرمون"
+      "البلليرمون",
+      "الليرمون",
+      "القصر العدلي"
     ],
     "alternative_english": [
       "al-Belleramoon"
@@ -176,7 +185,8 @@
       "شيخ أبو بكر"
     ],
     "alternative_english": [
-      "Sheikh Abu Bakr"
+      "Sheikh Abu Bakr",
+      "شيخ ابو بكر"
     ]
   },
   "12428b65e3cdde41ca92c1addbd4aef2": {
@@ -193,7 +203,9 @@
     "original_name_a": "المعصرانية",
     "original_name": "al-Ma'asaraniyeh Youth Housing",
     "alternative_arabic": [
-      "المعصرانية"
+      "المعصرانية",
+      "المعصرانيه",
+      "كرم الطراب"
     ],
     "alternative_english": [
       "al-Ma'asaraniyeh Youth Housing"
@@ -203,7 +215,8 @@
     "original_name_a": "الهزازة",
     "original_name": "al-Hazzazeh",
     "alternative_arabic": [
-      "الهزازة"
+      "الهزازة",
+      "الهزازه"
     ],
     "alternative_english": [
       "al-Hazzazeh"
@@ -213,7 +226,8 @@
     "original_name_a": "سوق المدينة",
     "original_name": "Souq al-Madina",
     "alternative_arabic": [
-      "سوق المدينة"
+      "سوق المدينة",
+      "سوق المدينه"
     ],
     "alternative_english": [
       "Souq al-Madina"
@@ -273,7 +287,8 @@
     "original_name_a": "مطار حلب الدولي",
     "original_name": "Aleppo International Airport",
     "alternative_arabic": [
-      "مطار حلب الدولي"
+      "مطار حلب الدولي",
+      "مطار حلب"
     ],
     "alternative_english": [
       "Aleppo International Airport"
@@ -286,14 +301,16 @@
       "الحمدانية"
     ],
     "alternative_english": [
-      "al-Hamdaniyeh III"
+      "al-Hamdaniyeh III",
+      "الحمدانيه"
     ]
   },
   "239db0bfa5582732e32b2f981626eebd": {
     "original_name_a": "سيف الدولة",
     "original_name": "Sayf ad-Dauleh",
     "alternative_arabic": [
-      "سيف الدولة"
+      "سيف الدولة",
+      "سيف الدوله"
     ],
     "alternative_english": [
       "Sayf ad-Dauleh"
@@ -303,7 +320,8 @@
     "original_name_a": "حديقة جمال",
     "original_name": "Jamal Abd an-Naser Park",
     "alternative_arabic": [
-      "حديقة جمال"
+      "حديقة جمال",
+      "حديقه جمال"
     ],
     "alternative_english": [
       "Jamal Abd an-Naser Park"
@@ -323,7 +341,8 @@
     "original_name_a": "الحديقة العامة",
     "original_name": "The Public Park",
     "alternative_arabic": [
-      "الحديقة العامة"
+      "الحديقة العامة",
+      "الحديقه العامه"
     ],
     "alternative_english": [
       "The Public Park"
@@ -353,7 +372,9 @@
     "original_name_a": "الجميلية",
     "original_name": "al-Jamiliyeh",
     "alternative_arabic": [
-      "الجميلية"
+      "الجميلية",
+      "الجميليه",
+      "القصر البلدي"
     ],
     "alternative_english": [
       "al-Jamiliyeh"
@@ -383,7 +404,8 @@
     "original_name_a": "حديقة جمال",
     "original_name": "Jamal Abd an-Naser Park",
     "alternative_arabic": [
-      "حديقة جمال"
+      "حديقة جمال",
+      "حديقه جمال"
     ],
     "alternative_english": [
       "Jamal Abd an-Naser Park"
@@ -403,7 +425,8 @@
     "original_name_a": "جامعة حلب",
     "original_name": "University of Aleppo",
     "alternative_arabic": [
-      "جامعة حلب"
+      "جامعة حلب",
+      "جامعه حلب"
     ],
     "alternative_english": [
       "University of Aleppo"
@@ -433,7 +456,8 @@
     "original_name_a": "الأندلس",
     "original_name": "Andalus",
     "alternative_arabic": [
-      "الأندلس"
+      "الأندلس",
+      "الاندلس"
     ],
     "alternative_english": [
       "Andalus"
@@ -443,7 +467,8 @@
     "original_name_a": "قارلق",
     "original_name": "Qarleq",
     "alternative_arabic": [
-      "قارلق"
+      "قارلق",
+      "قرلق"
     ],
     "alternative_english": [
       "Qarleq"
@@ -453,7 +478,10 @@
     "original_name_a": "العقبة",
     "original_name": "al-‘Aqabeh",
     "alternative_arabic": [
-      "العقبة"
+      "العقبة",
+      "العقبه",
+      "دوار السبع بحرات",
+      "منطقة باب جنين"
     ],
     "alternative_english": [
       "al-‘Aqabeh"
@@ -463,7 +491,8 @@
     "original_name_a": "الخالدية",
     "original_name": "al-Khaldiyeh",
     "alternative_arabic": [
-      "الخالدية"
+      "الخالدية",
+      "الخالديه"
     ],
     "alternative_english": [
       "al-Khaldiyeh"
@@ -473,7 +502,8 @@
     "original_name_a": "الحمدانية",
     "original_name": "al-Hamdaniyeh V",
     "alternative_arabic": [
-      "الحمدانية"
+      "الحمدانية",
+      "الحمدانيه"
     ],
     "alternative_english": [
       "al-Hamdaniyeh V"
@@ -483,7 +513,8 @@
     "original_name_a": "جبرين",
     "original_name": "Jibreen",
     "alternative_arabic": [
-      "جبرين"
+      "جبرين",
+      "الدويرينة"
     ],
     "alternative_english": [
       "Jibreen"
@@ -493,7 +524,8 @@
     "original_name_a": "المشارقة",
     "original_name": "al-Masharqa",
     "alternative_arabic": [
-      "المشارقة"
+      "المشارقة",
+      "المشارقه"
     ],
     "alternative_english": [
       "al-Masharqa"
@@ -513,7 +545,9 @@
     "original_name_a": "الأعجام",
     "original_name": "al-A'ajam",
     "alternative_arabic": [
-      "الأعجام"
+      "الأعجام",
+      "الاعجم",
+      "الأصيلة"
     ],
     "alternative_english": [
       "al-A'ajam"
@@ -543,7 +577,8 @@
     "original_name_a": "قلعة الشريف",
     "original_name": "Qal’et ash-Sharif",
     "alternative_arabic": [
-      "قلعة الشريف"
+      "قلعة الشريف",
+      "قلعه الشريف"
     ],
     "alternative_english": [
       "Qal’et ash-Sharif"
@@ -563,7 +598,9 @@
     "original_name_a": "الرصافة",
     "original_name": "Rasafeh",
     "alternative_arabic": [
-      "الرصافة"
+      "الرصافة",
+      "الرصافه",
+      "بني زيد"
     ],
     "alternative_english": [
       "Rasafeh"
@@ -593,7 +630,8 @@
     "original_name_a": "ثكنة هنانو",
     "original_name": "Hanano Barrack",
     "alternative_arabic": [
-      "ثكنة هنانو"
+      "ثكنة هنانو",
+      "ثكنه هنانو"
     ],
     "alternative_english": [
       "Hanano Barrack"
@@ -613,7 +651,10 @@
     "original_name_a": "الأشرفية",
     "original_name": "al-Ashrafiyeh",
     "alternative_arabic": [
-      "الأشرفية"
+      "الأشرفية",
+      "الأشرفيه",
+      "الاشرفيه",
+      "الاشرفية"
     ],
     "alternative_english": [
       "al-Ashrafiyeh"
@@ -623,7 +664,8 @@
     "original_name_a": "أرض الصباغ",
     "original_name": "Ard As-Sabbagh",
     "alternative_arabic": [
-      "أرض الصباغ"
+      "أرض الصباغ",
+      "ارض الصباغ"
     ],
     "alternative_english": [
       "Ard As-Sabbagh"
@@ -633,7 +675,8 @@
     "original_name_a": "الحمدانية",
     "original_name": "al-Hamdaniyeh I",
     "alternative_arabic": [
-      "الحمدانية"
+      "الحمدانية",
+      "الحمدانيه"
     ],
     "alternative_english": [
       "al-Hamdaniyeh I"
@@ -643,7 +686,8 @@
     "original_name_a": "كرم الميسر",
     "original_name": "Karm al-Myassar",
     "alternative_arabic": [
-      "كرم الميسر"
+      "كرم الميسر",
+      "الميسر"
     ],
     "alternative_english": [
       "Karm al-Myassar"
@@ -653,7 +697,8 @@
     "original_name_a": "الجابرية",
     "original_name": "al-Jabriyeh",
     "alternative_arabic": [
-      "الجابرية"
+      "الجابرية",
+      "الجابريه"
     ],
     "alternative_english": [
       "al-Jabriyeh"
@@ -683,7 +728,8 @@
     "original_name_a": "الأنصاري",
     "original_name": "al-Ansari",
     "alternative_arabic": [
-      "الأنصاري"
+      "الأنصاري",
+      "الانصاري"
     ],
     "alternative_english": [
       "al-Ansari"
@@ -713,7 +759,8 @@
     "original_name_a": "كرم الجزماتي",
     "original_name": "Karm aj-Jazmati",
     "alternative_arabic": [
-      "كرم الجزماتي"
+      "كرم الجزماتي",
+      "الجزماتي"
     ],
     "alternative_english": [
       "Karm aj-Jazmati"
@@ -723,7 +770,11 @@
     "original_name_a": "قلعة حلب",
     "original_name": "Aleppo Citadel",
     "alternative_arabic": [
-      "قلعة حلب"
+      "قلعة حلب",
+      "قلعه حلب",
+      "ساحة العواميد",
+      "باب انطاكيا",
+      "محيط القلعة"
     ],
     "alternative_english": [
       "Aleppo Citadel"
@@ -733,7 +784,8 @@
     "original_name_a": "ألتونبوغا",
     "original_name": "Altunbogha",
     "alternative_arabic": [
-      "ألتونبوغا"
+      "ألتونبوغا",
+      "التونبوغا"
     ],
     "alternative_english": [
       "Altunbogha"
@@ -743,7 +795,9 @@
     "original_name_a": "بستان الزهرة",
     "original_name": "Bustan az-Zahra",
     "alternative_arabic": [
-      "بستان الزهرة"
+      "بستان الزهرة",
+      "بستان الزهره",
+      "كراج الحجز"
     ],
     "alternative_english": [
       "Bustan az-Zahra"
@@ -753,7 +807,8 @@
     "original_name_a": "العزيزية",
     "original_name": "al-'Aziziyeh",
     "alternative_arabic": [
-      "العزيزية"
+      "العزيزية",
+      "العزيزيه"
     ],
     "alternative_english": [
       "al-'Aziziyeh"
@@ -763,7 +818,11 @@
     "original_name_a": "الحميدية",
     "original_name": "al-Hamidiyeh",
     "alternative_arabic": [
-      "الحميدية"
+      "الحميدية",
+      "الحميديه",
+      "جامع ميسلون",
+      "ميسلون",
+      "حي اقيول"
     ],
     "alternative_english": [
       "al-Hamidiyeh"
@@ -773,7 +832,8 @@
     "original_name_a": "قسطل المشط",
     "original_name": "Qastal Mosht",
     "alternative_arabic": [
-      "قسطل المشط"
+      "قسطل المشط",
+      "تراب الغرباء"
     ],
     "alternative_english": [
       "Qastal Mosht"
@@ -803,7 +863,8 @@
     "original_name_a": "تل الزرازير",
     "original_name": "Tal az-Zarazir",
     "alternative_arabic": [
-      "تل الزرازير"
+      "تل الزرازير",
+      "حي العامريه"
     ],
     "alternative_english": [
       "Tal az-Zarazir"
@@ -823,7 +884,8 @@
     "original_name_a": "الزبدية",
     "original_name": "az-Zebdiyeh",
     "alternative_arabic": [
-      "الزبدية"
+      "الزبدية",
+      "الزبديه"
     ],
     "alternative_english": [
       "az-Zebdiyeh"
@@ -843,7 +905,8 @@
     "original_name_a": "الراموسة",
     "original_name": "Ad-Ramouseh Industrial District III",
     "alternative_arabic": [
-      "الراموسة"
+      "الراموسة",
+      "الراموسه"
     ],
     "alternative_english": [
       "Ad-Ramouseh Industrial District III"
@@ -863,7 +926,9 @@
     "original_name_a": "الكلاسة",
     "original_name": "al-Kallaseh",
     "alternative_arabic": [
-      "الكلاسة"
+      "الكلاسة",
+      "الكلاسه",
+      "سوق الهال"
     ],
     "alternative_english": [
       "al-Kallaseh"
@@ -883,7 +948,11 @@
     "original_name_a": "الشعار",
     "original_name": "ash-Sha'ar",
     "alternative_arabic": [
-      "الشعار"
+      "الشعار",
+      "طريق الباب",
+      "كرم البيك",
+      "حي المواصلات القديمة",
+      "سوق سد اللوز"
     ],
     "alternative_english": [
       "ash-Sha'ar"
@@ -893,7 +962,10 @@
     "original_name_a": "البياضة",
     "original_name": "al-Bayyada",
     "alternative_arabic": [
-      "البياضة"
+      "البياضة",
+      "البياضه",
+      "جب القبة",
+      "باب الحديد"
     ],
     "alternative_english": [
       "al-Bayyada"
@@ -923,7 +995,12 @@
     "original_name_a": "عين التينة",
     "original_name": "Ayn at-Tal",
     "alternative_arabic": [
-      "عين التينة"
+      "عين التينة",
+      "عين التينه",
+      "الهلك",
+      "حي الهلك",
+      "الجندول",
+      "مساكن عين التل"
     ],
     "alternative_english": [
       "Ayn at-Tal"
@@ -933,7 +1010,8 @@
     "original_name_a": "المرجة",
     "original_name": "al-Marjeh",
     "alternative_arabic": [
-      "المرجة"
+      "المرجة",
+      "المرجه"
     ],
     "alternative_english": [
       "al-Marjeh"
@@ -943,7 +1021,8 @@
     "original_name_a": "كرم القاطرجي",
     "original_name": "Karm al-Qaterji",
     "alternative_arabic": [
-      "كرم القاطرجي"
+      "كرم القاطرجي",
+      "القاطرجي"
     ],
     "alternative_english": [
       "Karm al-Qaterji"
@@ -983,7 +1062,8 @@
     "original_name_a": "باب المقام",
     "original_name": "Bab al-Maqam",
     "alternative_arabic": [
-      "باب المقام"
+      "باب المقام",
+      "حي المغاير"
     ],
     "alternative_english": [
       "Bab al-Maqam"
@@ -993,7 +1073,8 @@
     "original_name_a": "الحلوانية",
     "original_name": "al-Helwaniyeh",
     "alternative_arabic": [
-      "الحلوانية"
+      "الحلوانية",
+      "الحلوانيه"
     ],
     "alternative_english": [
       "al-Helwaniyeh"
@@ -1003,7 +1084,8 @@
     "original_name_a": "جبرين",
     "original_name": "Industrial Area Jibreen",
     "alternative_arabic": [
-      "جبرين"
+      "جبرين",
+      "الدويرينة"
     ],
     "alternative_english": [
       "Industrial Area Jibreen"
@@ -1013,7 +1095,10 @@
     "original_name_a": "الأعظمية",
     "original_name": "al-A'azamiyeh",
     "alternative_arabic": [
-      "الأعظمية"
+      "الأعظمية",
+      "الأعظميه",
+      "الاعظميه",
+      "الاعظمية"
     ],
     "alternative_english": [
       "al-A'azamiyeh"
@@ -1023,7 +1108,10 @@
     "original_name_a": "الفرافرة",
     "original_name": "al-Farafra",
     "alternative_arabic": [
-      "الفرافرة"
+      "الفرافرة",
+      "الفرافره",
+      "باب النصر",
+      "دوار السبع بحرات"
     ],
     "alternative_english": [
       "al-Farafra"
@@ -1053,7 +1141,8 @@
     "original_name_a": "جورة عواد",
     "original_name": "Jouret ‘Awwad",
     "alternative_arabic": [
-      "جورة عواد"
+      "جورة عواد",
+      "جوره عواد"
     ],
     "alternative_english": [
       "Jouret ‘Awwad"
@@ -1063,7 +1152,8 @@
     "original_name_a": "الحيدرية",
     "original_name": "al-Haydariyeh",
     "alternative_arabic": [
-      "الحيدرية"
+      "الحيدرية",
+      "الحيدريه"
     ],
     "alternative_english": [
       "al-Haydariyeh"
@@ -1083,7 +1173,8 @@
     "original_name_a": "ساحة بزة",
     "original_name": "Sahet Bizzeh",
     "alternative_arabic": [
-      "ساحة بزة"
+      "ساحة بزة",
+      "ساحة بزه"
     ],
     "alternative_english": [
       "Sahet Bizzeh"
@@ -1093,7 +1184,8 @@
     "original_name_a": "العامرية",
     "original_name": "al-‘Amiriyeh",
     "alternative_arabic": [
-      "العامرية"
+      "العامرية",
+      "العامريه"
     ],
     "alternative_english": [
       "al-‘Amiriyeh"
@@ -1103,7 +1195,8 @@
     "original_name_a": "أقيول",
     "original_name": "Aghyor",
     "alternative_arabic": [
-      "أقيول"
+      "أقيول",
+      "اقيول"
     ],
     "alternative_english": [
       "Aghyor"
@@ -1123,7 +1216,9 @@
     "original_name_a": "القصيلة",
     "original_name": "al-Asileh",
     "alternative_arabic": [
-      "القصيلة"
+      "القصيلة",
+      "القصيله",
+      "حي المعادي"
     ],
     "alternative_english": [
       "al-Asileh"
@@ -1133,7 +1228,8 @@
     "original_name_a": "كرم حومد",
     "original_name": "Karm Homad",
     "alternative_arabic": [
-      "كرم حومد"
+      "كرم حومد",
+      "كرم الطحان"
     ],
     "alternative_english": [
       "Karm Homad"
@@ -1143,7 +1239,8 @@
     "original_name_a": "المحافظة",
     "original_name": "al-Muhafaza",
     "alternative_arabic": [
-      "المحافظة"
+      "المحافظة",
+      "المحافظه"
     ],
     "alternative_english": [
       "al-Muhafaza"
@@ -1193,7 +1290,8 @@
     "original_name_a": "الراموسة",
     "original_name": "Ad-Ramouseh Industrial District II",
     "alternative_arabic": [
-      "الراموسة"
+      "الراموسة",
+      "الراموسه"
     ],
     "alternative_english": [
       "Ad-Ramouseh Industrial District II"
@@ -1203,7 +1301,8 @@
     "original_name_a": "الحمدانية",
     "original_name": "al-Hamdaniyeh II",
     "alternative_arabic": [
-      "الحمدانية"
+      "الحمدانية",
+      "الحمدانيه"
     ],
     "alternative_english": [
       "al-Hamdaniyeh II"
@@ -1223,7 +1322,8 @@
     "original_name_a": "الراموسة",
     "original_name": "Ad-Ramouseh Industrial District IV",
     "alternative_arabic": [
-      "الراموسة"
+      "الراموسة",
+      "الراموسه"
     ],
     "alternative_english": [
       "Ad-Ramouseh Industrial District IV"
@@ -1233,7 +1333,8 @@
     "original_name_a": "العروبة",
     "original_name": "al-’Ourubeh",
     "alternative_arabic": [
-      "العروبة"
+      "العروبة",
+      "العروبه"
     ],
     "alternative_english": [
       "al-’Ourubeh"
@@ -1263,7 +1364,9 @@
     "original_name_a": "الأنصاري مشهد",
     "original_name": "al-Ansari Mashhad",
     "alternative_arabic": [
-      "الأنصاري مشهد"
+      "الأنصاري مشهد",
+      "الانصاري مشهد",
+      "المشهد"
     ],
     "alternative_english": [
       "al-Ansari Mashhad"
@@ -1283,7 +1386,8 @@
     "original_name_a": "ضهرة عواد",
     "original_name": "Dahret ‘Awwad",
     "alternative_arabic": [
-      "ضهرة عواد"
+      "ضهرة عواد",
+      "ضهره عواد"
     ],
     "alternative_english": [
       "Dahret ‘Awwad"
@@ -1303,7 +1407,8 @@
     "original_name_a": "السليمانية",
     "original_name": "al-Suleimaniyeh",
     "alternative_arabic": [
-      "السليمانية"
+      "السليمانية",
+      "السليمانيه"
     ],
     "alternative_english": [
       "al-Suleimaniyeh"
@@ -1343,7 +1448,8 @@
     "original_name_a": "الراموسة",
     "original_name": "Ad-Ramouseh Industrial District I",
     "alternative_arabic": [
-      "الراموسة"
+      "الراموسة",
+      "الراموسه"
     ],
     "alternative_english": [
       "Ad-Ramouseh Industrial District I"
