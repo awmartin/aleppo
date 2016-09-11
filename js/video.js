@@ -76,7 +76,7 @@ Video.prototype.getThumbnailUrl = function(size) {
 };
 
 Video.prototype.getPublishedDate = function() {
-  return this.data.snippet.publishedAt;
+  return new Date(this.data.snippet.publishedAt);
 };
 
 Video.prototype.getThumbnail = function() {
@@ -104,7 +104,8 @@ Video.prototype.getThumbnail = function() {
 
     var dateElt = $('<div>');
     dateElt.addClass('date');
-    var date = String(this.getPublishedDate()).split("T")[0];
+    var date = this.getPublishedDate().toDateString();
+    // var date = String(this.getPublishedDate()).split("T")[0];
     var dateText = document.createTextNode(date);
     dateElt.append(dateText);
 

@@ -20,6 +20,7 @@ html, body {
   z-index: 100;
   border-left: 1px solid #fff;
   display: none;
+  background-color: rgba(128, 128, 128, 0.5);
 }
 .map-sidebar .header {
   position: absolute;
@@ -27,7 +28,7 @@ html, body {
   left: 0;
   right: 0;
   height: 50px;
-  background-color: #000;
+  background-color: rgba(128, 128, 128, 0.5);
   padding: 5px;
   border-bottom: 1px solid #fff;
   color: white;
@@ -41,7 +42,32 @@ html, body {
   overflow-x: hidden;
   overflow-y: scroll;
 }
-
+.map-date-picker {
+  position: absolute;
+  bottom: 40px;
+  left: 15px;
+  width: 350px;
+  height: 50px;
+  background-color: rgba(128,128,128,0.5);
+  padding: 6px;
+  z-index: 100;
+  display: table;
+  color: white;
+}
+.map-date-picker label {
+  position: absolute;
+  top: -20px;
+  font-weight: normal;
+  font-size: 12px;
+}
+.map-date-picker input[type="text"] {
+  padding: 6px;
+  border-radius: 4px;
+  display: table-cell;
+  vertical-align: middle;
+  color: #555;
+  width: 100%
+}
 
 /* This makes the map as big as possible in the HTML page. */
 html, body, .map {
@@ -58,36 +84,9 @@ give the map an explicit size, and adjust the HTML content accordingly. For exam
 }
 */
 
-.lightbox {
-  position: absolute;
-  top: 100px;
-  width: 900px
-  height: 500px;
-  background-color: white;
-  padding: 10px;
-  display: none;
-}
-
-.lightbox .close-button {
-  position: absolute;
-  right: 10px;
-  top: -25px;
-  z-index: 1000;
-  color: white;
-}
-
-img.leaflet-image-layer {
-  cursor: pointer;
-}
-
-.img-padding {
-  padding: 20px 0;
-}
-
-
-
+/* Styling for the video thumbnails in the right-hand sidebar.*/
 .video {
-  border-top: 1px solid white;
+  border-bottom: 1px solid white;
   position: relative;
 }
 .video a {
@@ -111,6 +110,7 @@ img.leaflet-image-layer {
   text-align: right;
 }
 
+/* Styling for the circular markers. */
 .icon {
   /*border: 1px solid red;*/
   background-color: rgba(255, 0, 0, 0.5);
@@ -118,12 +118,13 @@ img.leaflet-image-layer {
   color: white;
   font-weight: bold;
   text-align: center;
-  display: table;
+  display: table; /* Align the text vertically in the circle. */
 }
 .icon:hover {
   background-color: rgba(255, 0, 0, 0.8);
 }
 .icon>div {
+  /* Aligns the text vertically in the circle. */
   display: table-cell;
   vertical-align: middle;
 }

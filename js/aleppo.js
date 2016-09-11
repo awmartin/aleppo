@@ -6,10 +6,15 @@ function YoutubeMapbox(options) {
 
   this.map = null;
   this.neighborhoodsLayer = null;
+  this.markers = []; // Hold references to all the markers so we can manage them directly.
+
+  this.dateFilter = new DateFilter();
 }
 
 // The entry point for the object.
 YoutubeMapbox.prototype.render = function() {
+  this.dateFilter.initializeGui(this.onDatePick.bind(this));
+
   this.makeMap()
     .then(this.getNeighborhoodsFromMap.bind(this))
     .then(this.getNeighborhoodNameTable.bind(this))
@@ -21,7 +26,7 @@ YoutubeMapbox.prototype.render = function() {
 
 YoutubeMapbox.prototype.makeMap = function() {
   return new Promise(function(resolve, reject) {
-    L.mapbox.accessToken = this.options.accessToken;
+    L.mapbox.accessToken = this.options.mapboxAccessToken;
 
     var map = L.mapbox.map(this.options.mapId, 'mapbox.streets')
       .setView(this.options.mapCenter, this.options.mapZoom);
@@ -151,13 +156,26 @@ YoutubeMapbox.prototype.retrieveNewVideos = function() {
   }.bind(this));
 };
 
+YoutubeMapbox.prototype.removeAllMarkers = function() {
+  for (var marker of this.markers) {
+    this.map.removeLayer(marker);
+  }
+  this.markers = [];
+};
+
 // Produce mapbox markers for each neighborhood's videos.
 YoutubeMapbox.prototype.placeVideosOnMap = function() {
   return new Promise(function(resolve, reject) {
+    // Remove all markers.
+    this.removeAllMarkers();
 
     const list = $('#' + this.options.videosListId);
     const content = $('#' + this.options.videosListId + ' .content');
     const header = $('#' + this.options.videosListId + ' .header');
+
+    list.hide();
+    header.empty();
+    content.empty();
 
     const neighborhoodMap = this.groupVideosByNeighborhood();
 
@@ -174,7 +192,7 @@ YoutubeMapbox.prototype.placeVideosOnMap = function() {
       });
 
       const location = neighborhood.getMarkerLocation();
-      L.marker([location.lat, location.lng], {
+      var marker = L.marker([location.lat, location.lng], {
           icon: icon
         })
         .addTo(this.map)
@@ -183,7 +201,6 @@ YoutubeMapbox.prototype.placeVideosOnMap = function() {
           content.empty();
 
           var videos = neighborhoodMap[id];
-
           this.sortByPublishedDate(videos);
 
           for (const video of videos) {
@@ -193,6 +210,8 @@ YoutubeMapbox.prototype.placeVideosOnMap = function() {
 
           list.show();
         }.bind(this));
+
+      this.markers.push(marker);
     } // end of neighborhoodMap loop
 
     resolve();
@@ -204,18 +223,22 @@ YoutubeMapbox.prototype.groupVideosByNeighborhood = function() {
 
   for (var key in this.videos) {
     const video = this.videos[key];
-    const videoHasNeighborhood = !!video.neighborhood;
 
-    if (videoHasNeighborhood) {
-      const neighborhood = video.neighborhood;
-      const id = neighborhood.getId();
+    if (this.videoPassesFilters(video)) {
+      const videoHasNeighborhood = !!video.neighborhood;
 
-      if (!neighborhoodMap[id]) {
-        neighborhoodMap[id] = [video];
-      } else {
-        neighborhoodMap[id].push(video);
+      if (videoHasNeighborhood) {
+        const neighborhood = video.neighborhood;
+        const id = neighborhood.getId();
+
+        if (!neighborhoodMap[id]) {
+          neighborhoodMap[id] = [video];
+        } else {
+          neighborhoodMap[id].push(video);
+        }
       }
     }
+
   }
 
   return neighborhoodMap;
@@ -249,4 +272,19 @@ YoutubeMapbox.prototype.sortByPublishedDate = function(videos) {
       return 0;
     }
   });
+};
+
+YoutubeMapbox.prototype.videoPassesFilters = function(video) {
+  return this.dateFilter.passes(video);
+};
+
+// Applies the new filter settings to the videos.
+YoutubeMapbox.prototype.updateFilteredVideos = function() {
+  this.placeVideosOnMap();
+};
+
+YoutubeMapbox.prototype.onDatePick = function(afterDate, beforeDate) {
+  this.dateFilter.setBeforeDate(beforeDate);
+  this.dateFilter.setAfterDate(afterDate);
+  this.updateFilteredVideos();
 };

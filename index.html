@@ -8,7 +8,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
   <link rel="stylesheet" href="css/aleppo.css">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
 </head>
 
 <body>
@@ -18,48 +27,57 @@
       <div class="header"></div>
       <div class="content"></div>
     </div>
+    <div id="date-picker" class="map-date-picker">
+      <label for="daterange">DATES</label>
+      <input type="text" name="daterange" value="" />
+    </div>
   </div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 
   <script src="js/neighborhood.js" charset="utf-8"></script>
   <script src="js/video.js" charset="utf-8"></script>
   <script src="js/util.js" charset="utf-8"></script>
   <script src="js/youtube.js" charset="utf-8"></script>
+  <script src="js/date-filter.js" charset="utf-8"></script>
   <script src="js/aleppo.js" charset="utf-8"></script>
 
   <script>
-    window.onload = function() {
-      const options = {
-        accessToken: 'pk.eyJ1IjoibWljaGFlbGphbWVzc3Rvcm0iLCJhIjoiY2lrMWU2MTQ0M2EzeHdka2k1cTh5dXJreCJ9.YEng7E_ItjPExFDFnFTSQQ',
-        mapboxMapId: 'violetwhitney.015226lm',
-        mapboxStyle: 'mapbox://styles/mapbox/dark-v8',
-        mapCenter: {
-          lat: 36.198,
-          lng: 37.1518
-        },
-        mapZoom: 13,
+  const options = {
+    mapboxAccessToken: 'pk.eyJ1IjoibWljaGFlbGphbWVzc3Rvcm0iLCJhIjoiY2lrMWU2MTQ0M2EzeHdka2k1cTh5dXJreCJ9.YEng7E_ItjPExFDFnFTSQQ',
+    mapboxMapId: 'violetwhitney.015226lm',
+    mapboxStyle: 'mapbox://styles/mapbox/dark-v8',
+    mapCenter: {
+      lat: 36.198,
+      lng: 37.1518
+    },
+    mapZoom: 13,
 
-        mapId: 'aleppo-map', // the id for the map element
-        videosListId: 'videos-list', // where to put the video thumbnails
+    mapId: 'aleppo-map', // the id for the map element
+    videosListId: 'videos-list', // where to put the video thumbnails
 
-        nameEquivalencyTableUrl: 'data/neighborhoods.json', // optional
-        cachedVideosUrl: 'data/videos.json', // optional
+    nameEquivalencyTableUrl: 'data/neighborhoods.json', // optional
+    cachedVideosUrl: 'data/videos.json', // optional
 
-        // Add more requests here to get more Youtube videos. Available properties are:
-        // - channel: the id of the Youtube channel
-        // - publishedAfter: an optional date string containing the date after which to get videos
-        // - publishedBefore: an optional date string to indicate the end date range of the query
-        requests: [
-          {channel: 'UCesBL01BgmHzdp1GZT2ltJw', publishedAfter: '2016-08-21T00:00:00Z'},
-        ],
-        youtubeApiKey: "AIzaSyCp5aUBEFSWZIjOy7Q-OZA5A5PhLscZnN4",
-      };
+    // Add more requests here to get more Youtube videos. Available properties are:
+    // - channel: the id of the Youtube channel
+    // - publishedAfter: an optional date string containing the date after which to get videos
+    // - publishedBefore: an optional date string to indicate the end date range of the query
+    requests: [
+      {channel: 'UCesBL01BgmHzdp1GZT2ltJw', publishedAfter: '2016-08-21T00:00:00Z'},
+    ],
+    youtubeApiKey: "AIzaSyCp5aUBEFSWZIjOy7Q-OZA5A5PhLscZnN4",
+  };
 
-      const aleppo = new YoutubeMapbox(options);
-      aleppo.render();
-    };
+
+  window.onload = function() {
+    const aleppo = new YoutubeMapbox(options);
+    aleppo.render();
+  };
   </script>
 </body>
 </html>
