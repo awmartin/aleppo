@@ -1,3 +1,21 @@
+// Notes about getting videos from Youtube.
+//
+// Change to yt.getAllVideosFromChannelViaPlaylists to get all the videos
+// linked in playlists in a channel.
+//
+// This request limits the results to 500 videos.
+// yt.getAllVideosFromChannel('UCALQlTUA8X31_af5f083yaw', onYouTubeDone);
+//
+// Channel IDs:
+// - UCALQlTUA8X31_af5f083yaw : has videos only up until about 6 months ago.
+// - UCesBL01BgmHzdp1GZT2ltJw : has new videos.
+//
+// Request videos in a date range like this:
+// yt.getAllVideosFromChannel('UCesBL01BgmHzdp1GZT2ltJw', onYouTubeDone, {
+//   publishedAfter: '2016-06-11T00:00:00Z',
+//   publishedBefore: '2016-06-27T00:00:00Z',
+// });
+
 function YouTube(apiKey) {
   this.apiKey = apiKey;
 }
@@ -31,7 +49,6 @@ YouTube.prototype.getAllVideosFromPlaylist = function(playlistId, onDone, option
   var onSuccess = function onSuccess(data) {
     var itemsSoFar = options.items || [];
     if (data.nextPageToken) {
-      console.log("Requesting another page:", data.nextPageToken);
       this.getAllVideosFromPlaylist(playlistId, onDone, {
         items: itemsSoFar.concat(data.items),
         pageToken: data.nextPageToken
@@ -85,7 +102,6 @@ YouTube.prototype.getAllVideosFromChannelViaPlaylists = function(channelId, onDo
         requestState.numRetrieved += 1;
         requestState.videos = requestState.videos.concat(items);
         if (requestState.numRetrieved === requestState.numPlaylists) {
-          console.log("Number of videos:", requestState.videos.length);
           onDone(requestState.videos);
         }
       };
@@ -101,13 +117,11 @@ YouTube.prototype.getAllVideosFromChannel = function(channelId, onDone, options 
 
   var onSuccess = function onSuccess(data) {
     var itemsSoFar = options.items || [];
-    console.log("Got", data.items.length, "videos on this page.");
 
     if (data.items.length === 0 || !data.nextPageToken) {
       onDone(itemsSoFar.concat(data.items));
 
     } else {
-      console.log("Requesting another page:", data.nextPageToken);
 
       this.getAllVideosFromChannel(channelId, onDone, {
         items: itemsSoFar.concat(data.items),

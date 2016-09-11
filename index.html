@@ -1,107 +1,61 @@
-<!-- Conflict Urbanism: Aleppo
-     Center for Spatial Research
-     Madeeha Merchant (mym2107@columbia.edu)
-
-================================================================= -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-  <!--Do not change Main title as appears in window -->
-  <title> Conflict Urbanism: Aleppo</title>
+<head>
+
+  <title>Aleppo</title>
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
-  <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
-  <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
-  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
-  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
-
-  <!-- optimize for search ... student name  -->
-  <meta name="" content="">
-  <meta name="" content="">
-
-  <!-- boostrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <link type="text/css" rel="stylesheet" href="http://fast.fonts.net/cssapi/c28915cb-7a1f-477c-9084-e9e755ede452.css"/>
-
-  <!-- css files required for case study -->
-  <link href='css/conflict_main.css' rel='stylesheet' />
-  <link href='css/conflict_course.css' rel='stylesheet' />
-  <style>
-    .map {
-      position:absolute;
-      top:0;
-      bottom:0;
-      width: 100%;
-      height: 1200px;
-    }
-
-    .lightbox {
-      position: absolute;
-      top: 100px;
-      width: 900px
-      height: 500px;
-      background-color: white;
-      padding: 10px;
-      display: none;
-    }
-
-    .lightbox .close-button {
-      position: absolute;
-      right: 10px;
-      top: -25px;
-      z-index: 1000;
-      color: white;
-    }
-
-    img.leaflet-image-layer {
-      cursor: pointer;
-    }
-
-    .img-padding {
-      padding: 20px 0;
-    }
-
-    #videos-list {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 140px;
-      z-index: 100;
-      overflow-x: hidden;
-      overflow-y: scroll;
-      display: none;
-    }
-
-    .video {
-      border-top: 1px solid white;
-    }
-    .video .date {
-      color: white;
-      font-size: 1.0rem;
-    }
-  </style>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css">
+  <link rel="stylesheet" href="css/aleppo.css">
 </head>
 
 <body>
-
-  <div id="test-map" class="map"></div>
+  <div id="aleppo-map" class="map"></div>
   <div id="videos-list"></div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
 
   <script src="js/neighborhood.js" charset="utf-8"></script>
   <script src="js/video.js" charset="utf-8"></script>
-  <script src="js/keyword.js" charset="utf-8"></script>
-  <script src="js/filtermanager.js" charset="utf-8"></script>
+  <script src="js/util.js" charset="utf-8"></script>
   <script src="js/youtube.js" charset="utf-8"></script>
   <script src="js/aleppo.js" charset="utf-8"></script>
 
-  <!-- Do not change -->
+  <script>
+    window.onload = function() {
+      const options = {
+        accessToken: 'pk.eyJ1IjoibWljaGFlbGphbWVzc3Rvcm0iLCJhIjoiY2lrMWU2MTQ0M2EzeHdka2k1cTh5dXJreCJ9.YEng7E_ItjPExFDFnFTSQQ',
+        mapboxMapId: 'violetwhitney.015226lm',
+        mapboxStyle: 'mapbox://styles/mapbox/dark-v8',
+        mapCenter: {
+          lat: 36.198,
+          lng: 37.1518
+        },
+        mapZoom: 13,
 
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" crossorigin="anonymous"></script>
+        mapId: 'aleppo-map', // the id for the map element
+        videosListId: 'videos-list', // where to put the video thumbnails
+
+        nameEquivalencyTableUrl: 'data/neighborhoods.json', // optional
+        cachedVideosUrl: 'data/videos.json', // optional
+
+        // Add more requests here to get more Youtube videos. Available properties are:
+        // - channel: the id of the Youtube channel
+        // - publishedAfter: an optional date string containing the date after which to get videos
+        // - publishedBefore: an optional date string to indicate the end date range of the query
+        requests: [
+          {channel: 'UCesBL01BgmHzdp1GZT2ltJw', publishedAfter: '2016-08-21T00:00:00Z'},
+        ],
+        youtubeApiKey: "AIzaSyCp5aUBEFSWZIjOy7Q-OZA5A5PhLscZnN4",
+      };
+
+      const aleppo = new YoutubeMapbox(options);
+      aleppo.render();
+    };
+  </script>
 </body>
 </html>
