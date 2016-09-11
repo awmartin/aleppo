@@ -2,7 +2,7 @@ function YoutubeMapbox(options) {
   this.options = options;
 
   this.videos = {};
-  this.neighborhoods = [];
+  this.neighborhoods = {};
 
   this.map = null;
   this.neighborhoodsLayer = null;
@@ -51,8 +51,10 @@ YoutubeMapbox.prototype.getNeighborhoodsFromMap = function() {
 
     this.neighborhoodsLayer.on('ready', function(e) {
 
-      e.target.eachLayer(function addMarker(layer) {
-        this.neighborhoods.push(new Neighborhood(layer.feature));
+      e.target.eachLayer(function(layer) {
+        const neighborhood = new Neighborhood(layer.feature);
+        const id = neighborhood.getId();
+        this.neighborhoods[id] = neighborhood;
       }.bind(this));
 
       resolve();
@@ -71,8 +73,9 @@ YoutubeMapbox.prototype.getNeighborhoodNameTable = function(next) {
     }
 
     $.get(this.options.nameEquivalencyTableUrl, function(data) {
-      for (var neighborhood of this.neighborhoods) {
-        const nameTable = data[neighborhood.getId()];
+      for (var id in this.neighborhoods) {
+        const neighborhood = this.neighborhoods[id];
+        const nameTable = data[id];
         if (nameTable) {
           neighborhood.setNameTable(nameTable);
         }
@@ -153,28 +156,46 @@ YoutubeMapbox.prototype.placeVideosOnMap = function() {
   return new Promise(function(resolve, reject) {
 
     const list = $('#' + this.options.videosListId);
+    const content = $('#' + this.options.videosListId + ' .content');
+    const header = $('#' + this.options.videosListId + ' .header');
+
     const neighborhoodMap = this.groupVideosByNeighborhood();
-    const geoJson = this.computeGeoJsonForNeighborhoods(neighborhoodMap);
 
-    var placedVideos = L.mapbox.featureLayer().setGeoJSON(geoJson).addTo(this.map);
+    for (const id in neighborhoodMap) {
+      const neighborhood = this.neighborhoods[id];
 
-    placedVideos.on('click', function(e) {
-      list.empty();
+      const numVideos = neighborhoodMap[id].length;
+      const size = Math.min(80, numVideos / 3.0 + 20.0);
 
-      var neighborhoodId = e.layer.feature.id,
-        videos = neighborhoodMap[neighborhoodId];
+      const icon = L.divIcon({
+        className: 'icon',
+        iconSize: [size, size],
+        html: '<div>' + String(numVideos) + '</div>',
+      });
 
-      this.sortByPublishedDate(videos);
+      const location = neighborhood.getMarkerLocation();
+      L.marker([location.lat, location.lng], {
+          icon: icon
+        })
+        .addTo(this.map)
+        .on('click', function(e) {
+          header.html(neighborhood.getEnglishName() + '<br>' + neighborhood.getArabicName());
+          content.empty();
 
-      for (const video of videos) {
-        const thumbnail = video.getThumbnail();
-        list.append(thumbnail);
-      }
+          var videos = neighborhoodMap[id];
 
-      list.show();
+          this.sortByPublishedDate(videos);
 
-      resolve();
-    }.bind(this));
+          for (const video of videos) {
+            const thumbnail = video.getThumbnail();
+            content.append(thumbnail);
+          }
+
+          list.show();
+        }.bind(this));
+    } // end of neighborhoodMap loop
+
+    resolve();
   }.bind(this));
 };
 
@@ -203,8 +224,9 @@ YoutubeMapbox.prototype.groupVideosByNeighborhood = function() {
 YoutubeMapbox.prototype.computeGeoJsonForNeighborhoods = function(neighborhoodMap) {
   var geoJson = [];
 
-  for (var neighborhood of this.neighborhoods) {
-    const id = neighborhood.getId();
+  for (const id in this.neighborhoods) {
+    const neighborhood = this.neighborhoods[id];
+
     const neighborhoodVideos = neighborhoodMap[id] || [];
     neighborhood.setMarkerData(neighborhoodVideos.length);
 

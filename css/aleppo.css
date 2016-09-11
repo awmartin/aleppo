@@ -1,15 +1,62 @@
-html, body, .map {
-  height: 100%;
-  width: 100%;
+html, body {
   padding: 0;
   margin: 0;
-
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
 
 .map {
   position: relative;
 }
+.map-content {
+  height: 100%;
+  width: 100%;
+}
+.map-sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 335px;
+  z-index: 100;
+  border-left: 1px solid #fff;
+  display: none;
+}
+.map-sidebar .header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background-color: #000;
+  padding: 5px;
+  border-bottom: 1px solid #fff;
+  color: white;
+}
+.map-sidebar .content {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+
+/* This makes the map as big as possible in the HTML page. */
+html, body, .map {
+  height: 100%;
+  width: 100%;
+}
+
+/* If you want the map to appear as part of a page of content, comment out the above selector, and
+give the map an explicit size, and adjust the HTML content accordingly. For example: */
+/*
+.map {
+  width: 100%;
+  height: 600px;
+}
+*/
 
 .lightbox {
   position: absolute;
@@ -37,22 +84,46 @@ img.leaflet-image-layer {
   padding: 20px 0;
 }
 
-#videos-list {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 140px;
-  z-index: 100;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  display: none;
-}
+
 
 .video {
   border-top: 1px solid white;
+  position: relative;
 }
-.video .date {
+.video a {
+  /* Remove the 3-px gap below the thumbnails. */
+  display: block;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+}
+.video .info {
   color: white;
   font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px;
+}
+.video .date {
+  text-align: right;
+}
+
+.icon {
+  /*border: 1px solid red;*/
+  background-color: rgba(255, 0, 0, 0.5);
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  display: table;
+}
+.icon:hover {
+  background-color: rgba(255, 0, 0, 0.8);
+}
+.icon>div {
+  display: table-cell;
+  vertical-align: middle;
 }

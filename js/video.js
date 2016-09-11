@@ -17,12 +17,10 @@ Video.prototype.getId = function() {
 
 // Attempts to associate video titles with the known neighborhood names.
 Video.prototype.locate = function(neighborhoods) {
-  var j = 0,
-    numNeighborhoods = neighborhoods.length,
-    videoTitle = this.getTitle();
+  const videoTitle = this.getTitle();
 
-  for (; j < numNeighborhoods; j++) {
-    const neighborhood = neighborhoods[j];
+  for (const id in neighborhoods) {
+    const neighborhood = neighborhoods[id];
     const nameTable = neighborhood.getNameTable();
 
     if (nameTable) {
@@ -84,7 +82,7 @@ Video.prototype.getPublishedDate = function() {
 Video.prototype.getThumbnail = function() {
   var div = $('<div>');
 
-  var thumbnailUrl = this.getThumbnailUrl('default');
+  var thumbnailUrl = this.getThumbnailUrl('medium');
   if (thumbnailUrl) {
     div.addClass('video');
 
@@ -110,7 +108,17 @@ Video.prototype.getThumbnail = function() {
     var dateText = document.createTextNode(date);
     dateElt.append(dateText);
 
-    div.append(dateElt);
+    var titleElt = $('<div>');
+    titleElt.addClass('title');
+    var titleText = document.createTextNode(this.getTitle());
+    titleElt.append(titleText);
+
+    var infoElt = $('<div>');
+    infoElt.addClass('info');
+    infoElt.append(titleElt);
+    infoElt.append(dateElt);
+
+    div.append(infoElt);
   }
 
   return div;

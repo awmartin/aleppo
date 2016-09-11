@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <title>Aleppo</title>
 
   <meta charset="utf-8">
@@ -13,8 +12,13 @@
 </head>
 
 <body>
-  <div id="aleppo-map" class="map"></div>
-  <div id="videos-list"></div>
+  <div class="map">
+    <div id="aleppo-map" class="map-content"></div>
+    <div id="videos-list" class="map-sidebar">
+      <div class="header"></div>
+      <div class="content"></div>
+    </div>
+  </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>

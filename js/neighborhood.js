@@ -11,8 +11,8 @@ Neighborhood.prototype.processFeatureData = function() {
   var neighborhoodCenter = Util.averageLatLng(this.feature.geometry.coordinates[0]);
 
   this.geometry = {
-    "type": "Point",
-    "coordinates": [neighborhoodCenter.lng, neighborhoodCenter.lat]
+    type: "Point",
+    coordinates: [neighborhoodCenter.lng, neighborhoodCenter.lat]
   };
 };
 
@@ -87,5 +87,12 @@ Neighborhood.prototype.getGeoJson = function() {
     properties: this.feature.properties,
     id: this.feature.id,
     neighborhood: this,
+  };
+};
+
+Neighborhood.prototype.getMarkerLocation = function() {
+  return {
+    lng: this.geometry.coordinates[0],
+    lat: this.geometry.coordinates[1],
   };
 };
