@@ -6,6 +6,7 @@ function YoutubeMapbox(options) {
 
   this.map = null;
   this.neighborhoodsLayer = null;
+  this.neighborhoodMap = {}; // Map from neighborhood id to arrays of videos.
   this.markers = []; // Hold references to all the markers so we can manage them directly.
 
   this.dateFilter = new DateFilter();
@@ -21,6 +22,7 @@ YoutubeMapbox.prototype.render = function() {
     .then(this.getNeighborhoodNameTable.bind(this))
     .then(this.retrieveCachedVideos.bind(this))
     .then(this.retrieveNewVideos.bind(this))
+    .then(this.groupVideosByNeighborhood.bind(this))
     .then(this.placeVideosOnMap.bind(this));
 };
 
@@ -157,6 +159,74 @@ YoutubeMapbox.prototype.retrieveNewVideos = function() {
   }.bind(this));
 };
 
+YoutubeMapbox.prototype.groupVideosByNeighborhood = function() {
+  return new Promise(function(resolve, reject) {
+    var map = {};
+
+    for (var key in this.videos) {
+      var video = this.videos[key];
+
+      if (this.videoPassesFilters(video)) {
+        var videoHasNeighborhood = !!video.neighborhood;
+
+        if (videoHasNeighborhood) {
+          var neighborhood = video.neighborhood;
+          var id = neighborhood.getId();
+
+          if (!map[id]) {
+            map[id] = [video];
+          } else {
+            map[id].push(video);
+          }
+        }
+      } // end filter check
+    } // end loop
+
+    this.neighborhoodMap = map;
+
+    resolve();
+  }.bind(this));
+};
+
+
+// Produce mapbox markers for each neighborhood's videos.
+YoutubeMapbox.prototype.placeVideosOnMap = function() {
+  return new Promise(function(resolve, reject) {
+    this.removeAllMarkers();
+    this.closeSidebar();
+
+    var list = $('#' + this.options.videosListId);
+    var content = $('#' + this.options.videosListId + ' .content');
+    var header = $('#' + this.options.videosListId + ' .header');
+
+    for (var id in this.neighborhoodMap) {
+      var numVideos = this.neighborhoodMap[id].length;
+      var size = Math.min(80, numVideos / 3.0 + 20.0);
+
+      var neighborhood = this.neighborhoods[id];
+      var location = neighborhood.getMarkerLocation();
+
+      // https://www.mapbox.com/mapbox.js/example/v1.0.0/divicon/
+      var icon = L.divIcon({
+        className: 'icon',
+        iconSize: [size, size],
+        html: '<div>' + String(numVideos) + '</div>',
+      });
+
+      var marker = L.marker([location.lat, location.lng], {
+          icon: icon
+        })
+        .addTo(this.map)
+        .on('click', this.getMarkerClickFunc(neighborhood).bind(this));
+
+      this.markers.push(marker);
+    } // end of neighborhoodMap loop
+
+    resolve();
+  }.bind(this));
+};
+
+
 YoutubeMapbox.prototype.removeAllMarkers = function() {
   for (var marker of this.markers) {
     // https://www.mapbox.com/mapbox.js/api/v2.4.0/l-map-class/
@@ -164,6 +234,7 @@ YoutubeMapbox.prototype.removeAllMarkers = function() {
   }
   this.markers = [];
 };
+
 
 YoutubeMapbox.prototype.closeSidebar = function() {
   var list = $('#' + this.options.videosListId);
@@ -175,90 +246,37 @@ YoutubeMapbox.prototype.closeSidebar = function() {
   content.empty();
 };
 
-// Produce mapbox markers for each neighborhood's videos.
-YoutubeMapbox.prototype.placeVideosOnMap = function() {
-  return new Promise(function(resolve, reject) {
-    // Remove all markers.
-    this.removeAllMarkers();
-    this.closeSidebar();
+
+YoutubeMapbox.prototype.getMarkerClickFunc = function(neighborhood) {
+  return function(e) {
     var list = $('#' + this.options.videosListId);
     var content = $('#' + this.options.videosListId + ' .content');
     var header = $('#' + this.options.videosListId + ' .header');
-    var neighborhoodMap = this.groupVideosByNeighborhood();
 
-    for (var id in neighborhoodMap) {
-      var neighborhood = this.neighborhoods[id];
+    header.html(neighborhood.getEnglishName() + '<br>' + neighborhood.getArabicName());
+    content.empty();
 
-      var numVideos = neighborhoodMap[id].length;
-      var size = Math.min(80, numVideos / 3.0 + 20.0);
+    var videos = this.neighborhoodMap[neighborhood.getId()];
+    this.sortByPublishedDate(videos);
 
-      // https://www.mapbox.com/mapbox.js/example/v1.0.0/divicon/
-      var icon = L.divIcon({
-        className: 'icon',
-        iconSize: [size, size],
-        html: '<div>' + String(numVideos) + '</div>',
-      });
-
-      var location = neighborhood.getMarkerLocation();
-      var marker = L.marker([location.lat, location.lng], {
-          icon: icon
-        })
-        .addTo(this.map)
-        .on('click', function(e) {
-          header.html(neighborhood.getEnglishName() + '<br>' + neighborhood.getArabicName());
-          content.empty();
-
-          var videos = neighborhoodMap[id];
-          this.sortByPublishedDate(videos);
-
-          for (var video of videos) {
-            var thumbnail = video.getThumbnail();
-            content.append(thumbnail);
-          }
-
-          list.show();
-        }.bind(this));
-
-      this.markers.push(marker);
-    } // end of neighborhoodMap loop
-
-    resolve();
-  }.bind(this));
-};
-
-YoutubeMapbox.prototype.groupVideosByNeighborhood = function() {
-  var neighborhoodMap = {};
-
-  for (var key in this.videos) {
-    var video = this.videos[key];
-
-    if (this.videoPassesFilters(video)) {
-      var videoHasNeighborhood = !!video.neighborhood;
-
-      if (videoHasNeighborhood) {
-        var neighborhood = video.neighborhood;
-        var id = neighborhood.getId();
-
-        if (!neighborhoodMap[id]) {
-          neighborhoodMap[id] = [video];
-        } else {
-          neighborhoodMap[id].push(video);
-        }
-      }
+    for (var video of videos) {
+      var thumbnail = video.getThumbnail();
+      content.append(thumbnail);
     }
 
+    list.show();
   }
-
-  return neighborhoodMap;
 };
 
-YoutubeMapbox.prototype.computeGeoJsonForNeighborhoods = function(neighborhoodMap) {
+
+// Not used, but handy if you need to generate a bunch of markers on a feature layer with one operation.
+YoutubeMapbox.prototype.computeGeoJsonForNeighborhoods = function() {
   var geoJson = [];
 
   for (var id in this.neighborhoods) {
     var neighborhood = this.neighborhoods[id];
 
-    var neighborhoodVideos = neighborhoodMap[id] || [];
+    var neighborhoodVideos = this.neighborhoodMap[id] || [];
     neighborhood.setMarkerData(neighborhoodVideos.length);
 
     if (neighborhoodVideos.length > 0) {
@@ -288,7 +306,8 @@ YoutubeMapbox.prototype.videoPassesFilters = function(video) {
 
 // Applies the new filter settings to the videos.
 YoutubeMapbox.prototype.updateFilteredVideos = function() {
-  this.placeVideosOnMap();
+  this.groupVideosByNeighborhood()
+    .then(this.placeVideosOnMap.bind(this));
 };
 
 YoutubeMapbox.prototype.onDatePick = function(afterDate, beforeDate) {

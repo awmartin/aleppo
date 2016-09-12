@@ -49,8 +49,8 @@ DateFilter.prototype.initializeGui = function(onPick) {
 
   datePicker.on('apply.daterangepicker', function(ev, picker) {
     onPick(picker.startDate, picker.endDate);
-    datePicker.val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format(
-      'MM/DD/YYYY'));
+    datePicker.val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format(
+      'YYYY-MM-DD'));
   });
 
   datePicker.on('cancel.daterangepicker', function(ev, picker) {
