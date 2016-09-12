@@ -6,6 +6,7 @@ html, body {
 
 .map {
   position: relative;
+  overflow: hidden; /* No scrollbars. */
 }
 .map-content {
   height: 100%;
@@ -13,7 +14,7 @@ html, body {
 }
 .map-sidebar {
   position: absolute;
-  top: 0;
+  top: 75px;
   right: 0;
   bottom: 0;
   width: 335px;
@@ -28,7 +29,6 @@ html, body {
   left: 0;
   right: 0;
   height: 50px;
-  background-color: rgba(128, 128, 128, 0.5);
   padding: 5px;
   border-bottom: 1px solid #fff;
   color: white;
@@ -43,30 +43,47 @@ html, body {
   overflow-y: scroll;
 }
 .map-date-picker {
+  display: block;
   position: absolute;
-  bottom: 40px;
-  left: 15px;
-  width: 350px;
-  height: 50px;
-  background-color: rgba(128,128,128,0.5);
-  padding: 6px;
+  top: 0;
+  right: 0;
+  width: 335px;
+  height: 75px;
   z-index: 100;
-  display: table;
   color: white;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid white;
+  border-left: 1px solid white;
+  background-color: rgba(128, 128, 128, 0.5);
 }
 .map-date-picker label {
-  position: absolute;
-  top: -20px;
   font-weight: normal;
   font-size: 12px;
+  margin: 5px 5px 0 5px;
 }
 .map-date-picker input[type="text"] {
+  margin: 5px;
   padding: 6px;
   border-radius: 4px;
-  display: table-cell;
-  vertical-align: middle;
   color: #555;
-  width: 100%
+  width: 325px;
+}
+#close-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  line-height: 40px;
+  vertical-align: middle;
+  font-size: 35px;
+  color: white;
+  text-decoration: none;
+}
+#close-button:hover {
+  text-decoration: none;
 }
 
 /* This makes the map as big as possible in the HTML page. */
@@ -89,12 +106,21 @@ give the map an explicit size, and adjust the HTML content accordingly. For exam
   border-bottom: 1px solid white;
   position: relative;
 }
-.video a {
+.video>a {
   /* Remove the 3-px gap below the thumbnails. */
-  display: block;
   padding: 0;
   margin: 0;
   line-height: 0;
+}
+.video a {
+  display: block;
+  color: white;
+}
+.video a.title-link {
+  padding: 5px;
+}
+.video a:hover {
+  text-decoration: none;
 }
 .video .info {
   color: white;
@@ -104,7 +130,9 @@ give the map an explicit size, and adjust the HTML content accordingly. For exam
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  padding: 5px;
+}
+.video .title {
+  /* blank */
 }
 .video .date {
   text-align: right;

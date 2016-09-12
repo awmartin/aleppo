@@ -95,6 +95,8 @@ Video.prototype.getThumbnail = function() {
     } else {
       link.attr('href', '#');
     }
+    var secondLink = link.clone();
+    secondLink.addClass('title-link');
 
     var img = $('<img>');
     img.attr('src', thumbnailUrl);
@@ -105,7 +107,6 @@ Video.prototype.getThumbnail = function() {
     var dateElt = $('<div>');
     dateElt.addClass('date');
     var date = this.getPublishedDate().toDateString();
-    // var date = String(this.getPublishedDate()).split("T")[0];
     var dateText = document.createTextNode(date);
     dateElt.append(dateText);
 
@@ -114,11 +115,12 @@ Video.prototype.getThumbnail = function() {
     var titleText = document.createTextNode(this.getTitle());
     titleElt.append(titleText);
 
+    secondLink.append(titleElt);
+    secondLink.append(dateElt);
+
     var infoElt = $('<div>');
     infoElt.addClass('info');
-    infoElt.append(titleElt);
-    infoElt.append(dateElt);
-
+    infoElt.append(secondLink)
     div.append(infoElt);
   }
 

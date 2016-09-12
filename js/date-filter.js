@@ -43,7 +43,8 @@ DateFilter.prototype.initializeGui = function(onPick) {
     locale: {
       cancelLabel: 'Clear'
     },
-    drops: 'up',
+    drops: 'down',
+    opens: 'left',
   });
 
   datePicker.on('apply.daterangepicker', function(ev, picker) {

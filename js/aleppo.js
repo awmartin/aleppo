@@ -13,6 +13,7 @@ function YoutubeMapbox(options) {
 
 // The entry point for the object.
 YoutubeMapbox.prototype.render = function() {
+  $('#close-button').click(this.closeSidebar.bind(this));
   this.dateFilter.initializeGui(this.onDatePick.bind(this));
 
   this.makeMap()
@@ -158,9 +159,20 @@ YoutubeMapbox.prototype.retrieveNewVideos = function() {
 
 YoutubeMapbox.prototype.removeAllMarkers = function() {
   for (var marker of this.markers) {
+    // https://www.mapbox.com/mapbox.js/api/v2.4.0/l-map-class/
     this.map.removeLayer(marker);
   }
   this.markers = [];
+};
+
+YoutubeMapbox.prototype.closeSidebar = function() {
+  const list = $('#' + this.options.videosListId);
+  const content = $('#' + this.options.videosListId + ' .content');
+  const header = $('#' + this.options.videosListId + ' .header');
+
+  list.hide();
+  header.empty();
+  content.empty();
 };
 
 // Produce mapbox markers for each neighborhood's videos.
@@ -168,15 +180,10 @@ YoutubeMapbox.prototype.placeVideosOnMap = function() {
   return new Promise(function(resolve, reject) {
     // Remove all markers.
     this.removeAllMarkers();
-
+    this.closeSidebar();
     const list = $('#' + this.options.videosListId);
     const content = $('#' + this.options.videosListId + ' .content');
     const header = $('#' + this.options.videosListId + ' .header');
-
-    list.hide();
-    header.empty();
-    content.empty();
-
     const neighborhoodMap = this.groupVideosByNeighborhood();
 
     for (const id in neighborhoodMap) {
@@ -185,6 +192,7 @@ YoutubeMapbox.prototype.placeVideosOnMap = function() {
       const numVideos = neighborhoodMap[id].length;
       const size = Math.min(80, numVideos / 3.0 + 20.0);
 
+      // https://www.mapbox.com/mapbox.js/example/v1.0.0/divicon/
       const icon = L.divIcon({
         className: 'icon',
         iconSize: [size, size],
