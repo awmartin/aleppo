@@ -5,7 +5,6 @@ function YoutubeMapbox(options) {
   this.neighborhoods = {};
 
   this.map = null;
-  this.neighborhoodsLayer = null;
   this.neighborhoodMap = {}; // Map from neighborhood id to arrays of videos.
   this.markers = []; // Hold references to all the markers so we can manage them directly.
 
@@ -18,7 +17,6 @@ YoutubeMapbox.prototype.render = function() {
   this.dateFilter.initializeGui(this.onDatePick.bind(this));
 
   this.makeMap()
-    // .then(this.getNeighborhoodsFromMap.bind(this))
     .then(this.getNeighborhoodNameTable.bind(this))
     .then(this.retrieveCachedVideos.bind(this))
     .then(this.retrieveNewVideos.bind(this))
@@ -41,20 +39,24 @@ YoutubeMapbox.prototype.makeMap = function() {
 
     L.mapbox.styleLayer(this.options.mapboxStyle).addTo(this.map);
 
-    this.neighborhoodsLayer = L.mapbox.featureLayer(this.options.mapboxMapId).addTo(this.map);
+    var neighborhoodsLayer = L.mapbox.featureLayer(this.options.mapboxMapId);
 
     // On click, show the name of the neighborhood.
-    // Also, store all the neighborhood objects as they're added.
-    this.neighborhoodsLayer.on('layeradd', function(e) {
+    neighborhoodsLayer.on('layeradd', function(e) {
       var popupContent = '<strong>' + e.layer.feature.properties.title + '</strong>';
       e.layer.bindPopup(popupContent);
-
-      var neighborhood = new Neighborhood(e.layer.feature);
-      var id = neighborhood.getId();
-      this.neighborhoods[id] = neighborhood;
     }.bind(this));
 
-    resolve();
+    // Add the neighborhoods to the map. When ready, record the neighborhood records.
+    neighborhoodsLayer.addTo(this.map).on('ready', function(e) {
+      neighborhoodsLayer.eachLayer(function(layer) {
+        var neighborhood = new Neighborhood(layer.feature);
+        var id = neighborhood.getId();
+        this.neighborhoods[id] = neighborhood;
+      }.bind(this));
+      resolve();
+    }.bind(this));
+
   }.bind(this));
 };
 
