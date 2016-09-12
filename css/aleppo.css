@@ -157,20 +157,20 @@ give the map an explicit size, and adjust the HTML content accordingly. For exam
   vertical-align: middle;
 }
 .xs {
-  background-color: rgba(40, 0, 0, 0.5);
+  background-color: rgba(29,30,29, 0.7);
 }
 .s {
-  background-color: rgba(80, 0, 0, 0.5);
+  background-color: rgba(35,58,54, 0.7);
 }
 .m {
-  background-color: rgba(120, 0, 0, 0.5);
+  background-color: rgba(42,88,81, 0.7);
 }
 .l {
-  background-color: rgba(160, 0, 0, 0.5);
+  background-color: rgba(49, 119, 109, 0.7);
 }
 .xl {
-  background-color: rgba(200, 0, 0, 0.5);
+  background-color: rgba(56, 152, 138, 0.7);
 }
 .xxl {
-  background-color: rgba(255, 0, 0, 0.5);
+  background-color: rgba(56, 152, 138, 0.7);
 }
