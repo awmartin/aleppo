@@ -48,7 +48,7 @@
   <script src="js/aleppo.js" charset="utf-8"></script>
 
   <script>
-  const options = {
+  var options = {
     mapboxAccessToken: 'pk.eyJ1IjoibWljaGFlbGphbWVzc3Rvcm0iLCJhIjoiY2lrMWU2MTQ0M2EzeHdka2k1cTh5dXJreCJ9.YEng7E_ItjPExFDFnFTSQQ',
     mapboxMapId: 'violetwhitney.015226lm',
     mapboxStyle: 'mapbox://styles/mapbox/dark-v8',
@@ -76,7 +76,7 @@
 
 
   window.onload = function() {
-    const aleppo = new YoutubeMapbox(options);
+    var aleppo = new YoutubeMapbox(options);
     aleppo.render();
   };
   </script>

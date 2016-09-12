@@ -43,7 +43,7 @@ YoutubeMapbox.prototype.makeMap = function() {
 
     // On click, show the name of the neighborhood.
     this.neighborhoodsLayer.on('layeradd', function(e) {
-      const popupContent = '<strong>' + e.layer.feature.properties.title + '</strong>';
+      var popupContent = '<strong>' + e.layer.feature.properties.title + '</strong>';
       e.layer.bindPopup(popupContent);
     });
 
@@ -58,8 +58,8 @@ YoutubeMapbox.prototype.getNeighborhoodsFromMap = function() {
     this.neighborhoodsLayer.on('ready', function(e) {
 
       e.target.eachLayer(function(layer) {
-        const neighborhood = new Neighborhood(layer.feature);
-        const id = neighborhood.getId();
+        var neighborhood = new Neighborhood(layer.feature);
+        var id = neighborhood.getId();
         this.neighborhoods[id] = neighborhood;
       }.bind(this));
 
@@ -80,8 +80,8 @@ YoutubeMapbox.prototype.getNeighborhoodNameTable = function(next) {
 
     $.get(this.options.nameEquivalencyTableUrl, function(data) {
       for (var id in this.neighborhoods) {
-        const neighborhood = this.neighborhoods[id];
-        const nameTable = data[id];
+        var neighborhood = this.neighborhoods[id];
+        var nameTable = data[id];
         if (nameTable) {
           neighborhood.setNameTable(nameTable);
         }
@@ -106,7 +106,7 @@ YoutubeMapbox.prototype.retrieveCachedVideos = function() {
         var video = new Video(videosJson[key]);
         video.locate(this.neighborhoods);
 
-        const videoId = video.getId();
+        var videoId = video.getId();
         this.videos[videoId] = video;
       } // end videos for loop
 
@@ -119,8 +119,8 @@ YoutubeMapbox.prototype.retrieveCachedVideos = function() {
 // Get all the most recent videos.
 YoutubeMapbox.prototype.retrieveNewVideos = function() {
   return new Promise(function(resolve, reject) {
-    const yt = new YouTube(this.options.youtubeApiKey);
-    const numRequests = this.options.requests.length;
+    var yt = new YouTube(this.options.youtubeApiKey);
+    var numRequests = this.options.requests.length;
     var state = {
       numSuccessfulRequests: 0
     };
@@ -133,7 +133,7 @@ YoutubeMapbox.prototype.retrieveNewVideos = function() {
       for (; i < numVideos; i++) {
         var video = new Video(videoData[i]);
         video.locate(this.neighborhoods);
-        const videoId = video.getId();
+        var videoId = video.getId();
         this.videos[videoId] = video;
       } // end videos for loop
 
@@ -143,7 +143,7 @@ YoutubeMapbox.prototype.retrieveNewVideos = function() {
       }
     }.bind(this);
 
-    for (const request of this.options.requests) {
+    for (var request of this.options.requests) {
       var requestOptions = {};
       if (request.publishedAfter) {
         requestOptions.publishedAfter = request.publishedAfter;
@@ -166,9 +166,9 @@ YoutubeMapbox.prototype.removeAllMarkers = function() {
 };
 
 YoutubeMapbox.prototype.closeSidebar = function() {
-  const list = $('#' + this.options.videosListId);
-  const content = $('#' + this.options.videosListId + ' .content');
-  const header = $('#' + this.options.videosListId + ' .header');
+  var list = $('#' + this.options.videosListId);
+  var content = $('#' + this.options.videosListId + ' .content');
+  var header = $('#' + this.options.videosListId + ' .header');
 
   list.hide();
   header.empty();
@@ -181,25 +181,25 @@ YoutubeMapbox.prototype.placeVideosOnMap = function() {
     // Remove all markers.
     this.removeAllMarkers();
     this.closeSidebar();
-    const list = $('#' + this.options.videosListId);
-    const content = $('#' + this.options.videosListId + ' .content');
-    const header = $('#' + this.options.videosListId + ' .header');
-    const neighborhoodMap = this.groupVideosByNeighborhood();
+    var list = $('#' + this.options.videosListId);
+    var content = $('#' + this.options.videosListId + ' .content');
+    var header = $('#' + this.options.videosListId + ' .header');
+    var neighborhoodMap = this.groupVideosByNeighborhood();
 
-    for (const id in neighborhoodMap) {
-      const neighborhood = this.neighborhoods[id];
+    for (var id in neighborhoodMap) {
+      var neighborhood = this.neighborhoods[id];
 
-      const numVideos = neighborhoodMap[id].length;
-      const size = Math.min(80, numVideos / 3.0 + 20.0);
+      var numVideos = neighborhoodMap[id].length;
+      var size = Math.min(80, numVideos / 3.0 + 20.0);
 
       // https://www.mapbox.com/mapbox.js/example/v1.0.0/divicon/
-      const icon = L.divIcon({
+      var icon = L.divIcon({
         className: 'icon',
         iconSize: [size, size],
         html: '<div>' + String(numVideos) + '</div>',
       });
 
-      const location = neighborhood.getMarkerLocation();
+      var location = neighborhood.getMarkerLocation();
       var marker = L.marker([location.lat, location.lng], {
           icon: icon
         })
@@ -211,8 +211,8 @@ YoutubeMapbox.prototype.placeVideosOnMap = function() {
           var videos = neighborhoodMap[id];
           this.sortByPublishedDate(videos);
 
-          for (const video of videos) {
-            const thumbnail = video.getThumbnail();
+          for (var video of videos) {
+            var thumbnail = video.getThumbnail();
             content.append(thumbnail);
           }
 
@@ -230,14 +230,14 @@ YoutubeMapbox.prototype.groupVideosByNeighborhood = function() {
   var neighborhoodMap = {};
 
   for (var key in this.videos) {
-    const video = this.videos[key];
+    var video = this.videos[key];
 
     if (this.videoPassesFilters(video)) {
-      const videoHasNeighborhood = !!video.neighborhood;
+      var videoHasNeighborhood = !!video.neighborhood;
 
       if (videoHasNeighborhood) {
-        const neighborhood = video.neighborhood;
-        const id = neighborhood.getId();
+        var neighborhood = video.neighborhood;
+        var id = neighborhood.getId();
 
         if (!neighborhoodMap[id]) {
           neighborhoodMap[id] = [video];
@@ -255,10 +255,10 @@ YoutubeMapbox.prototype.groupVideosByNeighborhood = function() {
 YoutubeMapbox.prototype.computeGeoJsonForNeighborhoods = function(neighborhoodMap) {
   var geoJson = [];
 
-  for (const id in this.neighborhoods) {
-    const neighborhood = this.neighborhoods[id];
+  for (var id in this.neighborhoods) {
+    var neighborhood = this.neighborhoods[id];
 
-    const neighborhoodVideos = neighborhoodMap[id] || [];
+    var neighborhoodVideos = neighborhoodMap[id] || [];
     neighborhood.setMarkerData(neighborhoodVideos.length);
 
     if (neighborhoodVideos.length > 0) {

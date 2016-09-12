@@ -21,7 +21,7 @@ DateFilter.prototype.setAfterDate = function(dateStr) {
 };
 
 DateFilter.prototype.passes = function(video) {
-  const videoDate = video.getPublishedDate();
+  var videoDate = video.getPublishedDate();
 
   if (!this.beforeDate && !this.afterDate) {
     return true;
@@ -36,7 +36,7 @@ DateFilter.prototype.passes = function(video) {
 };
 
 DateFilter.prototype.initializeGui = function(onPick) {
-  const datePicker = $('#date-picker input');
+  var datePicker = $('#date-picker input');
 
   datePicker.daterangepicker({
     autoUpdateInput: false,

@@ -4,7 +4,7 @@ function Video(data) {
 }
 
 Video.prototype.getId = function() {
-  const video = this.data;
+  var video = this.data;
 
   var resourceId = video.snippet.resourceId;
   if (resourceId) {
@@ -17,11 +17,11 @@ Video.prototype.getId = function() {
 
 // Attempts to associate video titles with the known neighborhood names.
 Video.prototype.locate = function(neighborhoods) {
-  const videoTitle = this.getTitle();
+  var videoTitle = this.getTitle();
 
-  for (const id in neighborhoods) {
-    const neighborhood = neighborhoods[id];
-    const nameTable = neighborhood.getNameTable();
+  for (var id in neighborhoods) {
+    var neighborhood = neighborhoods[id];
+    var nameTable = neighborhood.getNameTable();
 
     if (nameTable) {
 
@@ -67,7 +67,7 @@ Video.prototype.getTitle = function() {
 };
 
 Video.prototype.getThumbnailUrl = function(size) {
-  const thumb = this.data.snippet.thumbnails[size];
+  var thumb = this.data.snippet.thumbnails[size];
   if (thumb) {
     return thumb.url;
   } else {
