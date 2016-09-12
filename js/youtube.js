@@ -44,7 +44,10 @@ YouTube.prototype.getAllPlaylistsFromChannel = function(channelId, onDone) {
 };
 
 
-YouTube.prototype.getAllVideosFromPlaylist = function(playlistId, onDone, options = {}) {
+YouTube.prototype.getAllVideosFromPlaylist = function(playlistId, onDone, options) {
+  if (!options) {
+    options = {};
+  }
 
   var onSuccess = function onSuccess(data) {
     var itemsSoFar = options.items || [];
@@ -113,7 +116,10 @@ YouTube.prototype.getAllVideosFromChannelViaPlaylists = function(channelId, onDo
   this.getAllPlaylistsFromChannel(channelId, onGotAllPlaylists.bind(this));
 };
 
-YouTube.prototype.getAllVideosFromChannel = function(channelId, onDone, options = {}) {
+YouTube.prototype.getAllVideosFromChannel = function(channelId, onDone, options) {
+  if (!options) {
+    options = {};
+  }
 
   var onSuccess = function onSuccess(data) {
     var itemsSoFar = options.items || [];
