@@ -18,7 +18,7 @@ YoutubeMapbox.prototype.render = function() {
   this.dateFilter.initializeGui(this.onDatePick.bind(this));
 
   this.makeMap()
-    .then(this.getNeighborhoodsFromMap.bind(this))
+    // .then(this.getNeighborhoodsFromMap.bind(this))
     .then(this.getNeighborhoodNameTable.bind(this))
     .then(this.retrieveCachedVideos.bind(this))
     .then(this.retrieveNewVideos.bind(this))
@@ -44,31 +44,17 @@ YoutubeMapbox.prototype.makeMap = function() {
     this.neighborhoodsLayer = L.mapbox.featureLayer(this.options.mapboxMapId).addTo(this.map);
 
     // On click, show the name of the neighborhood.
+    // Also, store all the neighborhood objects as they're added.
     this.neighborhoodsLayer.on('layeradd', function(e) {
       var popupContent = '<strong>' + e.layer.feature.properties.title + '</strong>';
       e.layer.bindPopup(popupContent);
-    });
+
+      var neighborhood = new Neighborhood(e.layer.feature);
+      var id = neighborhood.getId();
+      this.neighborhoods[id] = neighborhood;
+    }.bind(this));
 
     resolve();
-  }.bind(this));
-};
-
-// Get the neighborhoods from the mapbox data.
-YoutubeMapbox.prototype.getNeighborhoodsFromMap = function() {
-  return new Promise(function(resolve, reject) {
-
-    this.neighborhoodsLayer.on('ready', function(e) {
-
-      e.target.eachLayer(function(layer) {
-        var neighborhood = new Neighborhood(layer.feature);
-        var id = neighborhood.getId();
-        this.neighborhoods[id] = neighborhood;
-      }.bind(this));
-
-      resolve();
-
-    }.bind(this)); // end ready
-
   }.bind(this));
 };
 
