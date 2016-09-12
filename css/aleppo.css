@@ -141,7 +141,7 @@ give the map an explicit size, and adjust the HTML content accordingly. For exam
 /* Styling for the circular markers. */
 .icon {
   /*border: 1px solid red;*/
-  background-color: rgba(255, 0, 0, 0.5);
+  background-color: #233a36;
   border-radius: 50%;
   color: white;
   font-weight: bold;
@@ -149,10 +149,28 @@ give the map an explicit size, and adjust the HTML content accordingly. For exam
   display: table; /* Align the text vertically in the circle. */
 }
 .icon:hover {
-  background-color: rgba(255, 0, 0, 0.8);
+  background-color: #44ddc8;
 }
 .icon>div {
   /* Aligns the text vertically in the circle. */
   display: table-cell;
   vertical-align: middle;
+}
+.xs {
+  background-color: rgba(40, 0, 0, 0.5);
+}
+.s {
+  background-color: rgba(80, 0, 0, 0.5);
+}
+.m {
+  background-color: rgba(120, 0, 0, 0.5);
+}
+.l {
+  background-color: rgba(160, 0, 0, 0.5);
+}
+.xl {
+  background-color: rgba(200, 0, 0, 0.5);
+}
+.xxl {
+  background-color: rgba(255, 0, 0, 0.5);
 }

@@ -205,10 +205,11 @@ YoutubeMapbox.prototype.placeVideosOnMap = function() {
 
       var neighborhood = this.neighborhoods[id];
       var location = neighborhood.getMarkerLocation();
+      var sizeTier = neighborhood.getSizeTier(numVideos);
 
       // https://www.mapbox.com/mapbox.js/example/v1.0.0/divicon/
       var icon = L.divIcon({
-        className: 'icon',
+        className: 'icon ' + sizeTier,
         iconSize: [size, size],
         html: '<div>' + String(numVideos) + '</div>',
       });

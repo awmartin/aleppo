@@ -79,6 +79,22 @@ Neighborhood.prototype.setMarkerData = function(numVideos) {
   }
 };
 
+Neighborhood.prototype.getSizeTier = function(numVideos) {
+  if (numVideos > 0 && numVideos < 5) {
+    return 'xs';
+  } else if (numVideos >= 5 && numVideos < 10) {
+    return 's';
+  } else if (numVideos >= 10 && numVideos < 15) {
+    return 'm';
+  } else if (numVideos >= 15 && numVideos < 18) {
+    return 'l';
+  } else if (numVideos >= 18 && numVideos < 100) {
+    return 'xl'
+  } else if (numVideos >= 100) {
+    return 'xxl';
+  }
+};
+
 Neighborhood.prototype.getGeoJson = function() {
   // This data is available in e.layer.feature in the click event on the marker.
   return {
