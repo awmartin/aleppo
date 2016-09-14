@@ -1,3 +1,3 @@
-# Aleppo
+# Aleppo Youtube Map
 
-Violet's YouTube Aleppo visualization research.
+An interactive map of videos of the conflict in Aleppo, Syria.
