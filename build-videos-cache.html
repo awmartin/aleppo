@@ -69,7 +69,6 @@
     // - publishedAfter: an optional date string containing the date after which to get videos
     // - publishedBefore: an optional date string to indicate the end date range of the query
     requests: [
-      {channel: 'UCesBL01BgmHzdp1GZT2ltJw', publishedAfter: '2016-08-21T00:00:00Z'},
     ],
     youtubeApiKey: "AIzaSyCp5aUBEFSWZIjOy7Q-OZA5A5PhLscZnN4",
   };
@@ -77,7 +76,7 @@
 
   window.onload = function() {
     var aleppo = new YoutubeMapbox(options);
-    aleppo.render();
+    aleppo.buildVideosCache('UCoUs821xB8HYAXBHdDcygdg', '2013-01-02', '2017-01-10', 7);
   };
   </script>
 </body>

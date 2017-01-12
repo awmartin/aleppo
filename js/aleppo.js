@@ -24,6 +24,57 @@ YoutubeMapbox.prototype.render = function() {
     .then(this.placeVideosOnMap.bind(this));
 };
 
+YoutubeMapbox.prototype.buildVideosCache = function(channelId, startDateStr, endDateStr, intervalNumDays) {
+  var displayVideosJson = function() {
+    console.log("Printing the retrieved videos", this.videos.length);
+    $('.map').remove();
+
+    var json = {};
+    for (var key in this.videos) {
+      json[key] = this.videos[key].data;
+    }
+    console.log(json);
+    $('body').html(JSON.stringify(json));
+  }.bind(this);
+
+
+  var buildTableOfRequests = function() {
+    var startDate = new Date(startDateStr);
+    var endDate = new Date(endDateStr);
+
+    var after = new Date(startDate);
+    var before = new Date((new Date(after)).setDate(after.getDate() + intervalNumDays));
+
+    while (after <= endDate) {
+      var request = {
+        channel: channelId,
+        publishedAfter: after.toISOString(),
+        publishedBefore: before.toISOString(),
+      };
+
+      this.options.requests.push(request);
+
+      after = before;
+      before = new Date((new Date(after)).setDate(after.getDate() + intervalNumDays));
+      if (endDate < before) {
+        before = endDate;
+      }
+      if (before === after) { break; }
+    }
+    console.log('Done building requests', this.options.requests);
+  };
+
+  //{channel: 'UCesBL01BgmHzdp1GZT2ltJw', publishedAfter: '2016-08-21T00:00:00Z'},
+
+  buildTableOfRequests();
+
+  //$('.map').empty();
+  //$('.map').html(JSON.stringify(this.options.requests));
+  this.makeMap()
+    .then(this.getNeighborhoodNameTable.bind(this))
+    .then(this.retrieveNewVideos.bind(this))
+    .then(displayVideosJson);
+};
 
 YoutubeMapbox.prototype.makeMap = function() {
   return new Promise(function(resolve, reject) {
@@ -39,23 +90,31 @@ YoutubeMapbox.prototype.makeMap = function() {
 
     L.mapbox.styleLayer(this.options.mapboxStyle).addTo(this.map);
 
-    var neighborhoodsLayer = L.mapbox.featureLayer(this.options.mapboxMapId);
+    this.neighborhoodsLayer = L.mapbox.featureLayer(this.options.mapboxMapId);
 
     // On click, show the name of the neighborhood.
-    neighborhoodsLayer.on('layeradd', function(e) {
+    this.neighborhoodsLayer.on('layeradd', function(e) {
       var popupContent = '<strong>' + e.layer.feature.properties.title + '</strong>';
       e.layer.bindPopup(popupContent);
     }.bind(this));
 
+    resolve();
+
     // Add the neighborhoods to the map. When ready, record the neighborhood records.
-    neighborhoodsLayer.addTo(this.map).on('ready', function(e) {
-      neighborhoodsLayer.eachLayer(function(layer) {
+    this.neighborhoodsLayer.addTo(this.map).on('ready', function(e) {
+      this.neighborhoodsLayer.eachLayer(function(layer) {
         var neighborhood = new Neighborhood(layer.feature);
         var id = neighborhood.getId();
         this.neighborhoods[id] = neighborhood;
       }.bind(this));
       resolve();
     }.bind(this));
+
+  }.bind(this));
+};
+
+YoutubeMapbox.prototype.populateNeighborhoodTable = function() {
+  return new Promise(function(resolve, reject){
 
   }.bind(this));
 };
