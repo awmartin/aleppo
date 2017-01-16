@@ -174,3 +174,32 @@ give the map an explicit size, and adjust the HTML content accordingly. For exam
 .xxl {
   background-color: rgba(56, 152, 138, 0.7);
 }
+
+.nav {
+  position: absolute;
+  left: 30px;
+  right: 0px;
+  top: 0px;
+  height: 30px;
+  z-index: 100;
+}
+.nav a {
+  color: white;
+  text-decoration: none;
+}
+.nav a.selected {
+  text-decoration: underline;
+}
+.nav ul {
+  list-style-type: none;
+}
+.nav li {
+  float: left;
+  margin-top: 10px;
+  margin-right: 20px;
+  font-size: 24px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue", "Helvetica", sans-serif;
+  font-weight: 300;
+}
+
+

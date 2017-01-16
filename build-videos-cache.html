@@ -76,7 +76,28 @@
 
   window.onload = function() {
     var aleppo = new YoutubeMapbox(options);
-    aleppo.buildVideosCache('UCoUs821xB8HYAXBHdDcygdg', '2013-01-02', '2017-01-10', 7);
+
+    // The arguments to this function are channelId, start date, end date, and the interval.
+    // The interval determines the number of days that are asked for with each query to Youtube.
+    // So a start date and end date that are 3 weeks apart with an interval of 7 days will result
+    // in 3 queries.
+    //
+    // For example:
+    // aleppo.buildVideosCache('UCoUs821xB8HYAXBHdDcygdg', '2013-01-02', '2017-01-10', 7);
+
+    aleppo.buildVideosCache('UCALQlTUA8X31_af5f083yaw', '2013-01-02', '2017-01-14', 7);
+
+    // After the queries are done, the JSON string of all the videos appears in the browser.
+    // Copy this to the clipboard, then in a terminal run
+    //
+    // pbpaste > videos-filename.json
+    //
+    // where "videos-filename.json" is the name of the file you want to store the videos in.
+    // Do this in the "data" folder.
+    // 
+    // Then, in the map file, replace the "cachedVideosUrl" option with this filename. For example,
+    //
+    // cachedVideosUrl: 'data/videos-filename.json"
   };
   </script>
 </body>
