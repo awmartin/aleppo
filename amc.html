@@ -69,14 +69,24 @@
     videosListId: 'videos-list', // where to put the video thumbnails
 
     nameEquivalencyTableUrl: 'data/neighborhoods.json', // optional
-    cachedVideosUrl: 'data/videos-amc.json', // optional
+    cachedVideosUrl: 'data/amc-xlsx.json', // optional
+
+    /*
+    csvVideosUrl: 'data/AMC_Tags.xlsx', // optional
+    csvOptions: {
+        videoIdColumn: 0,
+        publishedAtColumn: 1,
+        titleColumn: 7,
+        descriptionColumn: 8,
+    },
+    */
 
     // Add more requests here to get more Youtube videos. Available properties are:
     // - channel: the id of the Youtube channel
     // - publishedAfter: an optional date string containing the date after which to get videos
     // - publishedBefore: an optional date string to indicate the end date range of the query
     requests: [
-      {channel: 'UCoUs821xB8HYAXBHdDcygdg', publishedAfter: '2017-01-10T00:00:00Z'},
+      //{channel: 'UCoUs821xB8HYAXBHdDcygdg', publishedAfter: '2017-01-10T00:00:00Z'},
     ],
     youtubeApiKey: "AIzaSyCp5aUBEFSWZIjOy7Q-OZA5A5PhLscZnN4",
   };

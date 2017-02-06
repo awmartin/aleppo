@@ -18,6 +18,7 @@ YoutubeMapbox.prototype.render = function() {
 
   this.makeMap()
     .then(this.getNeighborhoodNameTable.bind(this))
+    .then(this.retrieveCsvVideos.bind(this))
     .then(this.retrieveCachedVideos.bind(this))
     .then(this.retrieveNewVideos.bind(this))
     .then(this.groupVideosByNeighborhood.bind(this))
@@ -98,8 +99,6 @@ YoutubeMapbox.prototype.makeMap = function() {
       e.layer.bindPopup(popupContent);
     }.bind(this));
 
-    resolve();
-
     // Add the neighborhoods to the map. When ready, record the neighborhood records.
     this.neighborhoodsLayer.addTo(this.map).on('ready', function(e) {
       this.neighborhoodsLayer.eachLayer(function(layer) {
@@ -128,6 +127,7 @@ YoutubeMapbox.prototype.getNeighborhoodNameTable = function(next) {
     }
 
     $.get(this.options.nameEquivalencyTableUrl, function(data) {
+      console.log("neighborhood name table", data);
       for (var id in this.neighborhoods) {
         var neighborhood = this.neighborhoods[id];
         var nameTable = data[id];
@@ -137,30 +137,131 @@ YoutubeMapbox.prototype.getNeighborhoodNameTable = function(next) {
       }
 
       resolve();
-
     }.bind(this));
+  }.bind(this));
+};
+
+
+YoutubeMapbox.prototype.retrieveCsvVideos = function() {
+  return new Promise(function(resolve, reject){
+    if (!this.options.csvVideosUrl) {
+      resolve();
+      return;
+    }
+
+    var url = this.options.csvVideosUrl;
+    var oReq = new XMLHttpRequest();
+    oReq.open("GET", url, true);
+    oReq.responseType = "arraybuffer";
+
+    oReq.onload = function(e) {
+      var arraybuffer = oReq.response;
+
+      /* convert data to binary string */
+      var data = new Uint8Array(arraybuffer);
+      var arr = new Array();
+      for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+      var bstr = arr.join("");
+
+      /* Call XLSX */
+      var options = {
+        type: "binary",
+        cellFormula: false,
+        cellHTML: false,
+      };
+
+      var workbook = XLSX.read(bstr, options);
+
+      /* DO SOMETHING WITH workbook HERE */
+      var first_sheet_name = workbook.SheetNames[0];
+      var worksheet = workbook.Sheets[first_sheet_name];
+
+      var getCellAddress = function(c, r) {
+        let columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+          "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+        let addressColumn = columns[c];
+        let addressRow = r + 1;
+        return addressColumn + addressRow;
+      };
+
+
+      var i = 1;
+      while (true) {
+
+        var videoId = worksheet[getCellAddress(this.options.csvOptions.videoIdColumn, i)];
+        var title = worksheet[getCellAddress(this.options.csvOptions.titleColumn, i)];
+        var description = worksheet[getCellAddress(this.options.csvOptions.descriptionColumn, i)];
+        var publishedAt = worksheet[getCellAddress(this.options.csvOptions.publishedAtColumn, i)];
+
+        if (!videoId || !title || !description || !publishedAt) { break; }
+
+        var videoJson = {
+          "id": {
+            "videoId": videoId.v,
+          },
+          "snippet": {
+            "title": title.v,
+            "description": description.v,
+            "publishedAt": publishedAt.v,
+            "thumbnails": {
+              "default":{"url":"https://i.ytimg.com/vi/"+videoId.v+"/default.jpg","width":120,"height":90},
+              "medium":{"url":"https://i.ytimg.com/vi/"+videoId.v+"/mqdefault.jpg","width":320,"height":180},
+              "high":{"url":"https://i.ytimg.com/vi/"+videoId.v+"/hqdefault.jpg","width":480,"height":360}
+            },
+          },
+        };
+
+        var parsedJson = Video.parse(videoJson);
+        if (parsedJson) {
+          var video = new Video(parsedJson);
+          video.locate(this.neighborhoods);
+          this.videos[videoId.v] = video;
+        }
+        
+        i++;
+      }
+
+      resolve();
+
+    }.bind(this);
+
+    oReq.send();
+
   }.bind(this));
 };
 
 YoutubeMapbox.prototype.retrieveCachedVideos = function() {
   return new Promise(function(resolve, reject) {
     if (!this.options.cachedVideosUrl) {
+      console.log("no cached videos url provided.");
       resolve();
       return;
     }
 
     $.get(this.options.cachedVideosUrl, function(videosJson) {
+      console.log("cached videos json", videosJson);
+
       // Loop over all the videos and tag them with their neighborhood.
       for (var key in videosJson) {
-        var video = new Video(videosJson[key]);
-        video.locate(this.neighborhoods);
+        var videoJson = videosJson[key];
+        var parsedJson = Video.parse(videoJson);
+        if (parsedJson) {
+          var video = new Video(parsedJson);
+          video.locate(this.neighborhoods);
 
-        var videoId = video.getId();
-        this.videos[videoId] = video;
+          var videoId = video.getId();
+          this.videos[videoId] = video;
+        }
       } // end videos for loop
 
+      console.log("Videos are", this.videos);
+
       resolve();
-    }.bind(this));
+    }.bind(this))
+    .fail(function(err) {
+      console.error("error", err);
+      resolve();
+    });
   }.bind(this));
 };
 
@@ -168,6 +269,12 @@ YoutubeMapbox.prototype.retrieveCachedVideos = function() {
 // Get all the most recent videos.
 YoutubeMapbox.prototype.retrieveNewVideos = function() {
   return new Promise(function(resolve, reject) {
+    // No requests to service, so abort!
+    if (this.options.requests.length === 0) {
+      resolve();
+      return;
+    }
+
     var yt = new YouTube(this.options.youtubeApiKey);
     var numRequests = this.options.requests.length;
     var state = {

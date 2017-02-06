@@ -3,7 +3,22 @@ function Video(data) {
   this.neighborhood = null;
 }
 
+Video.parse = function(data) {
+  if (typeof data === 'string') {
+    data = JSON.parse(data);
+  }
+
+  if (data.items) {
+    data = data.items[0];
+  }
+
+  return data;
+}
+
 Video.prototype.getId = function() {
+  if (typeof this.data.id === 'string') {
+    return this.data.id;
+  }
   var video = this.data;
 
   var resourceId = video.snippet.resourceId;
@@ -126,3 +141,49 @@ Video.prototype.getThumbnail = function() {
 
   return div;
 };
+
+// Attempts to associate video titles with the known neighborhood names.
+Video.prototype.locateVerbose = function(neighborhoods) {
+  var videoTitle = this.getTitle();
+
+  for (var id in neighborhoods) {
+    var neighborhood = neighborhoods[id];
+    var nameTable = neighborhood.getNameTable();
+
+    if (nameTable) {
+      var ar = 0,
+        numArabic = nameTable.alternative_arabic.length,
+        en = 0,
+        numEnglish = nameTable.alternative_english.length;
+
+      // Loop through all the equivalent arabic names. Stop if we find a name in the title.
+      for (; ar < numArabic; ar++) {
+        var arabicName = nameTable.alternative_arabic[ar];
+        if (videoTitle.includes(arabicName)) {
+          this.neighborhood = neighborhood;
+          break;
+        }
+      }
+      // Loop through all the equivalent english names too. Stop if we find one in the title.
+      for (; en < numEnglish; en++) {
+        var englishName = nameTable.alternative_english[en];
+        if (videoTitle.includes(englishName)) {
+          this.neighborhood = neighborhood;
+          break;
+        }
+      }
+
+    } else {
+
+      // The default behavior. Needed if something is wrong with or missing from the
+      // equivalency table.
+      var arabic = neighborhood.getArabicName();
+      var english = neighborhood.getEnglishName();
+
+      if (videoTitle.includes(arabic) || videoTitle.includes(english)) {
+        this.neighborhood = neighborhood;
+      }
+    }
+
+  }
+}; // end locate()
