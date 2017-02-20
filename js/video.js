@@ -1,6 +1,5 @@
 function Video(data) {
   this.data = data;
-  this.neighborhood = null;
 }
 
 Video.parse = function(data) {
@@ -8,11 +7,17 @@ Video.parse = function(data) {
     data = JSON.parse(data);
   }
 
+  var result = {};
+
   if (data.items) {
-    data = data.items[0];
+    result = data.items[0];
   }
 
-  return data;
+  if (result && data.neighborhoods) {
+    result.neighborhoods = data.neighborhoods;
+  }
+
+  return result;
 }
 
 Video.prototype.getId = function() {
@@ -186,4 +191,21 @@ Video.prototype.locateVerbose = function(neighborhoods) {
     }
 
   }
-}; // end locate()
+}; // end locateVerbose()
+
+Video.prototype.getNeighborhoodName = function() {
+  if (this.neighborhood) {
+    return this.neighborhood.getEnglishName() || this.neighborhood.getArabicName();
+  } else {
+    return null;
+  }
+};
+
+Video.prototype.getNeighborhoodId = function() {
+  if (this.neighborhood) {
+    return this.neighborhood.getId();
+  } else {
+    return null;
+  }
+};
+

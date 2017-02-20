@@ -17,12 +17,27 @@ YoutubeMapbox.prototype.render = function() {
   this.dateFilter.initializeGui(this.onDatePick.bind(this));
 
   this.makeMap()
-    .then(this.getNeighborhoodNameTable.bind(this))
+    //.then(this.getNeighborhoodNameTable.bind(this))
     .then(this.retrieveCsvVideos.bind(this))
     .then(this.retrieveCachedVideos.bind(this))
     .then(this.retrieveNewVideos.bind(this))
     .then(this.groupVideosByNeighborhood.bind(this))
     .then(this.placeVideosOnMap.bind(this));
+};
+
+YoutubeMapbox.prototype.displayNeighborhoods = function() {
+  var displayThem = function() {
+    $('.map').remove();
+    var json = {};
+    for (var key in this.neighborhoods){
+      var obj = this.neighborhoods[key];
+      json[key] = obj;
+    }
+    $('body').html(JSON.stringify(json));
+  }.bind(this);
+
+  this.makeMap()
+    .then(displayThem);
 };
 
 YoutubeMapbox.prototype.buildVideosCache = function(channelId, startDateStr, endDateStr, intervalNumDays) {
@@ -214,7 +229,7 @@ YoutubeMapbox.prototype.retrieveCsvVideos = function() {
         var parsedJson = Video.parse(videoJson);
         if (parsedJson) {
           var video = new Video(parsedJson);
-          video.locate(this.neighborhoods);
+          //video.locate(this.neighborhoods);
           this.videos[videoId.v] = video;
         }
         
@@ -247,14 +262,21 @@ YoutubeMapbox.prototype.retrieveCachedVideos = function() {
         var parsedJson = Video.parse(videoJson);
         if (parsedJson) {
           var video = new Video(parsedJson);
-          video.locate(this.neighborhoods);
+          //video.locate(this.neighborhoods);
 
           var videoId = video.getId();
           this.videos[videoId] = video;
         }
       } // end videos for loop
 
-      console.log("Videos are", this.videos);
+      //console.log("Videos are", this.videos);
+
+      //var videosText = "videoId,videoTitle,neighborhoodId,neighborhoodName\n";
+      //for (var key in this.videos) {
+      //  var video = this.videos[key];
+      //  videosText += video.getId() + ", " + video.getTitle() + ", " + video.getNeighborhoodId() + ", " + video.getNeighborhoodName() + "\n";
+      //}
+      //console.log(videosText);
 
       resolve();
     }.bind(this))
@@ -288,7 +310,7 @@ YoutubeMapbox.prototype.retrieveNewVideos = function() {
       // Loop over all the videos and tag them with their neighborhood.
       for (; i < numVideos; i++) {
         var video = new Video(videoData[i]);
-        video.locate(this.neighborhoods);
+        //video.locate(this.neighborhoods);
         var videoId = video.getId();
         this.videos[videoId] = video;
       } // end videos for loop
@@ -315,28 +337,29 @@ YoutubeMapbox.prototype.retrieveNewVideos = function() {
 
 YoutubeMapbox.prototype.groupVideosByNeighborhood = function() {
   return new Promise(function(resolve, reject) {
-    var map = {};
+    var mapping = {};
 
     for (var key in this.videos) {
       var video = this.videos[key];
 
       if (this.videoPassesFilters(video)) {
-        var videoHasNeighborhood = !!video.neighborhood;
+        var videoHasNeighborhoods = !!video.data.neighborhoods;
 
-        if (videoHasNeighborhood) {
-          var neighborhood = video.neighborhood;
-          var id = neighborhood.getId();
+        if (videoHasNeighborhoods) {
+          var neighborhoodIds = video.data.neighborhoods;
 
-          if (!map[id]) {
-            map[id] = [video];
-          } else {
-            map[id].push(video);
+          for (var id of neighborhoodIds) {
+            if (!mapping[id]) {
+              mapping[id] = [video];
+            } else {
+              mapping[id].push(video);
+            }
           }
         }
       } // end filter check
     } // end loop
 
-    this.neighborhoodMap = map;
+    this.neighborhoodMap = mapping;
 
     resolve();
   }.bind(this));
@@ -352,9 +375,11 @@ YoutubeMapbox.prototype.placeVideosOnMap = function() {
     var list = $('#' + this.options.videosListId);
     var content = $('#' + this.options.videosListId + ' .content');
     var header = $('#' + this.options.videosListId + ' .header');
+    var total = 0;
 
     for (var id in this.neighborhoodMap) {
       var numVideos = this.neighborhoodMap[id].length;
+      total += numVideos;
       var size = Math.min(80, numVideos / 3.0 + 20.0);
 
       var neighborhood = this.neighborhoods[id];
@@ -376,6 +401,8 @@ YoutubeMapbox.prototype.placeVideosOnMap = function() {
 
       this.markers.push(marker);
     } // end of neighborhoodMap loop
+
+    console.log("Placing", total, "videos");
 
     resolve();
   }.bind(this));
